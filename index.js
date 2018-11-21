@@ -1,6 +1,7 @@
 'use strict'
 
-const regex = /(?:^|\n)[\?\!]{3}(\+)? ?(?:([\w\-]+(?: +[\w\-]+)*?)?(?: +"(.*?)")|([\w\-]+(?: +[\w\-]+)*?)) *(?:\n|$)/gm;
+const regex = /(?:^|\n)[\?\!]{3}(\+)? ?(?:([\u4e00-\u9fa5_a-zA-Z0-9\-]+(?: +[\u4e00-\u9fa5_a-zA-Z0-9\-]+)*?)?(?: +"(.*?)")|([\u4e00-\u9fa5_a-zA-Z0-9\-]+(?: +[\u4e00-\u9fa5_a-zA-Z0-9\-]+)*?)) *(?:\n|$)/gm;
+// const regex = /(?:^|\n)[\?\!]{3}(\+)? ?(?:([\w\-]+(?: +[\w\-]+)*?)?(?: +"(.*?)")|([\w\-]+(?: +[\w\-]+)*?)) *(?:\n|$)/gm;
 
 var tab = '\t'
 var tabSize = 4
@@ -99,6 +100,10 @@ module.exports = function blockPlugin (opts) {
       let val = res[2] || res[4]
       // console.log(val)
       let title = res[3] || ''
+      if (res[0][0] == '!') {
+        title = res[4]
+        val = ''
+      }
       // console.log(subvalue)
       // console.log(subvalue.replace(regexonce, ''))
       // console.log(subvalue.replace(regexonce, ''))
