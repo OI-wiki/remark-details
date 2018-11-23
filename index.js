@@ -37,6 +37,7 @@ module.exports = function blockPlugin (opts) {
     var size
     var now
 
+    // console.log('??')
     while (index < length) {
       // Eat everything if there’s no following newline.
       if (index === -1) {
@@ -45,12 +46,13 @@ module.exports = function blockPlugin (opts) {
       }
 
       // Stop if the next character is NEWLINE.
-      if (value.charAt(index + 1) === lineFeed) {
+      let c = value.charAt(index + 1)
+      if (c != lineFeed && c != space && c != tab) {
         break
       }
 
       // In commonmark-mode, following indented lines are part of the paragraph.
-      if (commonmark) {
+      if (true) {
         size = 0
         position = index + 1
 
@@ -112,8 +114,14 @@ module.exports = function blockPlugin (opts) {
       let childval = subvalue.replace(regex, '').split('\n')
       // console.log(childval)
       childval.forEach((e, idx) => {
-        childval[idx] = e.replace(/\s{4}/, '')
+        // console.log(e.length)
+        if (e.length == 0) {
+          childval[idx] = '\\'
+        } else {
+          childval[idx] = e.replace(/\s{4}/, '')
+        }
       })
+      // console.log(childval)
       childval = childval.join('\n')
       return eat(subvalue)({
         type: 'details',
