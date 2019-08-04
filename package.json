@@ -1,6 +1,6 @@
 {
   "name": "remark-details",
-  "version": "1.2.0",
+  "version": "1.5.0",
   "description": "a tokenizer for remark to support details plugin in pymdown",
   "main": "index.js",
   "scripts": {
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/Ir1d/remark-details/issues"
   },
-  "homepage": "https://github.com/Ir1d/remark-details#readme"
+  "homepage": "https://github.com/Ir1d/remark-details#readme",
+  "devDependencies": {
+    "remark-cli": "^7.0.0"
+  }
 }

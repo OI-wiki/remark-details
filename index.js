@@ -8,6 +8,7 @@ var tabSize = 4
 var lineFeed = '\n'
 var space = ' '
 
+
 module.exports = function blockPlugin (opts) {
   function blockTokenizer (eat, value, silent) {
     var length = value.length + 1
@@ -84,7 +85,7 @@ module.exports = function blockPlugin (opts) {
     }
 
     subvalue = value.slice(0, index)
-    // console.log(subvalue)
+    // console.log('subvalue', subvalue, 'ends')
     // console.log(value)
     if (silent) {
       return true
@@ -94,8 +95,10 @@ module.exports = function blockPlugin (opts) {
     now.column += subvalue.length
     now.offset += subvalue.length
     let res = regex.exec(subvalue)
+    // console.log(res)
     // subvalue += value
     if (res !== null) {
+      let header = res[0]
       if (silent) {
         return true
       }
@@ -116,15 +119,17 @@ module.exports = function blockPlugin (opts) {
       childval.forEach((e, idx) => {
         // console.log(e.length)
         if (e.length == 0) {
-          childval[idx] = '\\'
+          childval[idx] = '\n'
         } else {
           childval[idx] = e.replace(/\s{4}/, '')
         }
       })
       // console.log(childval)
       childval = childval.join('\n')
+      // console.log(childval)
       return eat(subvalue)({
         type: 'details',
+        header: header,
         value: val,
         title: title,
         children: self.tokenizeBlock(childval, now)
@@ -155,8 +160,23 @@ module.exports = function blockPlugin (opts) {
     const visitors = Compiler.prototype.visitors
     visitors.details = function (node) {
       // return '$$\n' + node.value + '\n$$'
-      console.log('visited in index.js')
-      return node.value
+      // console.log('visited in index.js')
+      // console.log(node.value)
+      // console.log(node.children)
+      // let res = '??? ' + node.title + '\n'
+      // for (let w of node.children) {
+      //   console.log(w)
+      //   res += visitors[w.type].call(w)
+      // }
+      // console.olg
+      // return this.encode(node.children)
+      // return res
+      let children_ = this.all(node).map((ele) => 
+        ele.split('\n').map(e => '    ' + e).join('\n')
+      ).join('\n')
+      // console.log(children_)
+
+      return node.header + children_
     }
   }
 }
