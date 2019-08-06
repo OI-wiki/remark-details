@@ -52,6 +52,15 @@ module.exports = function blockPlugin (opts) {
         break
       }
 
+      // Stop if next 4 characters aren't all space
+      let nc = value.slice(index + 1, index + 5)
+      // console.log(nc === '    ')
+      // console.log(nc, '???')
+      if (nc !== '    ') {
+        break
+      }
+
+      // console.log(value.slice(0, index))
       // In commonmark-mode, following indented lines are part of the paragraph.
       if (true) {
         size = 0
@@ -71,19 +80,20 @@ module.exports = function blockPlugin (opts) {
 
           position++
         }
-
         if (size >= tabSize && character !== lineFeed) {
+          // console.log(value.slice(0, index), index)
           index = value.indexOf(lineFeed, index + 1)
+          // console.log(value.slice(0, index), index)
+          // console.log(index)
           continue
         }
       }
 
-      subvalue = value.slice(index + 1)
+      // subvalue = value.slice(index + 1)
 
       position = index
       index = value.indexOf(lineFeed, index + 1)
     }
-
     subvalue = value.slice(0, index)
     // console.log('subvalue', subvalue, 'ends')
     // console.log(value)

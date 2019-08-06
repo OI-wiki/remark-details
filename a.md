@@ -37,3 +37,11 @@
 !!! warning `random_shuffle` 已于 C++14 标准中被弃用，于 C++17 标准中被移除。
 
 ??? note " 例题[Luogu P2949\[USACO09OPEN\]工作调度 Work Scheduling](https://www.luogu.org/problemnew/show/P2949)"
+
+最大。你需要保证对于你选择的一个树上结点，它的父亲一定被选中。求出这个最大的比值。
+
+??? note " 例题[Luogu P2949\[USACO09OPEN\]工作调度 Work Scheduling](https://www.luogu.org/problemnew/show/P2949)"
+
+
+最大。你需要保证对于你选择的一个树上结点，它的父亲一定被选中。求出这个最大的比值。
+
