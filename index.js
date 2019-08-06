@@ -149,9 +149,9 @@ module.exports = function blockPlugin (opts) {
   const interruptParagraph = Parser.prototype.interruptParagraph
   const interruptList = Parser.prototype.interruptList
   const interruptBlockquote = Parser.prototype.interruptBlockquote
-  interruptParagraph.splice(interruptParagraph.indexOf('paragraph') - 1, 0, ['details'])
-  interruptList.splice(interruptList.indexOf('paragraph') - 1, 0, ['details'])
-  interruptBlockquote.splice(interruptBlockquote.indexOf('paragraph') - 1, 0, ['details'])
+  // interruptParagraph.splice(interruptParagraph.indexOf('paragraph') - 1, 0, ['details'])
+  // interruptList.splice(interruptList.indexOf('paragraph') - 1, 0, ['details'])
+  // interruptBlockquote.splice(interruptBlockquote.indexOf('paragraph') - 1, 0, ['details'])
 
   const Compiler = this.Compiler
 
@@ -171,9 +171,11 @@ module.exports = function blockPlugin (opts) {
       // console.olg
       // return this.encode(node.children)
       // return res
-      let children_ = this.all(node).map((ele) => 
-        ele.split('\n').map(e => '    ' + e).join('\n')
-      ).join('\n')
+      let children_ = this.all(node).map((ele) => {
+        // console.log(ele.split('\n').map(e => '    ' + e))
+        return ele.split('\n').map(e => '    ' + e).join('\n')
+      }
+      ).join('\n\n')
       // console.log(children_)
 
       return node.header + children_
