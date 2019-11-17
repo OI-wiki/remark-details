@@ -185,7 +185,7 @@ module.exports = function blockPlugin (opts) {
         // console.log(ele.split('\n').map(e => '    ' + e))
         return ele.split('\n').map(e => '    ' + e).join('\n')
       }
-      ).join('\n\n')
+      ).join('\n    \n')
       // console.log(children_)
 
       return node.header + children_
