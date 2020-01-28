@@ -1,5 +1,13 @@
 'use strict'
 
+var remark2rehype = require('remark-rehype')
+var unified = require('unified')
+var markdown = require('remark-parse')
+var html = require('rehype-stringify')
+
+const magic = unified()
+.use(markdown).use(remark2rehype).use(html)
+
 const regex = /(?:^|\n)[\?\!]{3}(\+)? ?(?:([\u4e00-\u9fa5_a-zA-Z0-9\-]+(?: +[\u4e00-\u9fa5_a-zA-Z0-9\-]+)*?)?(?: +"(.*?)")|([\u4e00-\u9fa5_a-zA-Z0-9\-]+(?: +[\u4e00-\u9fa5_a-zA-Z0-9\-]+)*?)) *(?:\n|$)/gm;
 // const regex = /(?:^|\n)[\?\!]{3}(\+)? ?(?:([\w\-]+(?: +[\w\-]+)*?)?(?: +"(.*?)")|([\w\-]+(?: +[\w\-]+)*?)) *(?:\n|$)/gm;
 
@@ -10,7 +18,7 @@ var space = ' '
 
 
 module.exports = function blockPlugin (opts) {
-  function blockTokenizer (eat, value, silent) {
+ function blockTokenizer (eat, value, silent) {
     var length = value.length + 1
     var index = 0
     var subvalue = ''
@@ -137,8 +145,25 @@ module.exports = function blockPlugin (opts) {
       // console.log(childval)
       childval = childval.join('\n')
       // console.log(childval)
+
+      // pack header into hProp.summary as HTML string
+      let summary
+      if (header.length > 0) {
+        let headerH = header.replace('\n', '')
+        summary = headerH.substr('4') || ''
+        let icon = 'note'
+        if (summary.indexOf('warning') > -1) icon = 'warning'
+        summary = summary.replace(icon, '').trim()
+        summary = summary.replace(/"+$/, "").replace(/^"+/, "").trim();
+      }
+      let summaryHTML = (magic.processSync(summary).contents)
+      // console.log(summaryHTML)
+
       return eat(subvalue)({
         type: 'details',
+        data: {hProperties: 
+          {class: 'details', header: header, summary: `${summaryHTML}`}
+        },
         header: header,
         value: val,
         title: title,
