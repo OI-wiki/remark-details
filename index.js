@@ -24,26 +24,26 @@ module.exports = function blockPlugin (opts) {
     var length = value.length + 1
     var index = 0
     var subvalue = ''
-    var fenceCount
-    var marker
+    // var fenceCount
+    // var marker
     var character
-    var queue
-    var content
-    var exdentedContent
-    var closing
-    var exdentedClosing
-    var indent
+    // var queue
+    // var content
+    // var exdentedContent
+    // var closing
+    // var exdentedClosing
+    // var indent
     var now
     var self = this
-    var settings = self.options
-    var commonmark = settings.commonmark
-    var gfm = settings.gfm
-    var tokenizers = self.blockTokenizers
-    var interruptors = self.interruptParagraph
+    // var settings = self.options
+    // var commonmark = settings.commonmark
+    // var gfm = settings.gfm
+    // var tokenizers = self.blockTokenizers
+    // var interruptors = self.interruptParagraph
     var index = value.indexOf(lineFeed)
     var length = value.length
     var position
-    var subvalue
+    // var subvalue
     var character
     var size
     var now
@@ -76,31 +76,29 @@ module.exports = function blockPlugin (opts) {
 
       // console.log(value.slice(0, index))
       // In commonmark-mode, following indented lines are part of the paragraph.
-      if (true) {
-        size = 0
-        position = index + 1
+      size = 0
+      position = index + 1
 
-        while (position < length) {
-          character = value.charAt(position)
+      while (position < length) {
+        character = value.charAt(position)
 
-          if (character === tab) {
-            size = tabSize
-            break
-          } else if (character === space) {
-            size++
-          } else {
-            break
-          }
-
-          position++
+        if (character === tab) {
+          size = tabSize
+          break
+        } else if (character === space) {
+          size++
+        } else {
+          break
         }
-        if (size >= tabSize && character !== lineFeed) {
-          // console.log(value.slice(0, index), index)
-          index = value.indexOf(lineFeed, index + 1)
-          // console.log(value.slice(0, index), index)
-          // console.log(index)
-          continue
-        }
+
+        position++
+      }
+      if (size >= tabSize && character !== lineFeed) {
+        // console.log(value.slice(0, index), index)
+        index = value.indexOf(lineFeed, index + 1)
+        // console.log(value.slice(0, index), index)
+        // console.log(index)
+        continue
       }
 
       // subvalue = value.slice(index + 1)
