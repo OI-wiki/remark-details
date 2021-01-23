@@ -174,8 +174,7 @@ module.exports = function blockPlugin (opts) {
       // console.log(subvalue);
       // console.log("===============================================================");
 
-      const func = eat(subvalue);
-      return func({
+      return eat(subvalue)({
         type: 'details',
         data: {
           hProperties: {
