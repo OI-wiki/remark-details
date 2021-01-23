@@ -6,7 +6,7 @@ var markdown = require('remark-parse')
 var html = require('rehype-stringify')
 
 const magic = unified()
-.use(markdown).use(remark2rehype).use(html)
+  .use(markdown).use(remark2rehype).use(html)
 
 const regex = /(?:^|\n)[\?\!]{3}(\+)? ?(?:([\u4e00-\u9fa5_a-zA-Z0-9\-]+(?: +[\u4e00-\u9fa5_a-zA-Z0-9\-]+)*?)?(?: +"(.*?)")|([\u4e00-\u9fa5_a-zA-Z0-9\-]+(?: +[\u4e00-\u9fa5_a-zA-Z0-9\-]+)*?)) *(?:\n|$)/gm;
 // const regex = /(?:^|\n)[\?\!]{3}(\+)? ?(?:([\w\-]+(?: +[\w\-]+)*?)?(?: +"(.*?)")|([\w\-]+(?: +[\w\-]+)*?)) *(?:\n|$)/gm;
@@ -18,9 +18,9 @@ var space = ' '
 
 
 module.exports = function blockPlugin (opts) {
- function blockTokenizer (eat, value, silent) {
-   console.log('=======================\n blockTokenizers: ');
-   console.log(value);
+  function blockTokenizer (eat, value, silent) {
+    // console.log('=======================\n blockTokenizers: ');
+    // console.log(value);
     var length = value.length + 1
     var index = 0
     var subvalue = ''
@@ -48,8 +48,8 @@ module.exports = function blockPlugin (opts) {
     var size
     var now
 
-    console.log('index: ', index, `[${value.charAt(index)}]`);
-    console.log(typeof lineFeed, `[${lineFeed}]`);
+    // console.log('index: ', index, `[${value.charAt(index)}]`);
+    // console.log(typeof lineFeed, `[${lineFeed}]`);
     while (index < length) {
       // Eat everything if there’s no following newline.
       if (index === -1) {
@@ -59,13 +59,13 @@ module.exports = function blockPlugin (opts) {
 
       // Stop if the next character is NEWLINE.
       let c = value.charAt(index + 1)
-      console.log(index+1, 'c:', `[${c}]`);
+      // console.log(index+1, 'c:', `[${c}]`);
       if (c != lineFeed && c != space && c != tab) {
-        console.log('break1:', index + 1, 'c:', `[${c}]`);
+        // console.log('break1:', index + 1, 'c:', `[${c}]`);
         break
       }
 
-      if(c == lineFeed){ // empty line
+      if (c == lineFeed) { // empty line
         // ok
       } else {
         // Stop if next 4 characters aren't all space
@@ -73,7 +73,7 @@ module.exports = function blockPlugin (opts) {
         // console.log(nc === '    ')
         // console.log(nc, '???')
         if (nc !== '    ') {
-          console.log('break2:', 'nc:', `[${nc}]`);
+          // console.log('break2:', 'nc:', `[${nc}]`);
           break
         }
       }
@@ -166,13 +166,13 @@ module.exports = function blockPlugin (opts) {
       }
       let summaryHTML = (magic.processSync(summary).contents)
       // console.log(summaryHTML)
-      console.log("==========================header===============================");
-      console.log(header);
-      console.log("==========================child=================================");
-      console.log(childval);
-      console.log("==========================subvalue==============================");
-      console.log(subvalue);
-      console.log("===============================================================");
+      // console.log("==========================header===============================");
+      // console.log(header);
+      // console.log("==========================child=================================");
+      // console.log(childval);
+      // console.log("==========================subvalue==============================");
+      // console.log(subvalue);
+      // console.log("===============================================================");
 
       const func = eat(subvalue);
       return func({
