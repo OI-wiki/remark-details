@@ -8,7 +8,7 @@ var de = require("./index.js");
 
 
 var fs = require("fs");
-var www = fs.readFileSync("a.md");
+var www = fs.readFileSync("b.md");
 
 // const doc = "中文abc中文$a_i$中文";
 remark()
@@ -17,5 +17,6 @@ remark()
   .use(de)
   // .use(sp)
   .process(www, function(err, res) {
-    console.log(String(res));
+    console.log('finished');
+    // console.log(String(res));
   });

@@ -19,6 +19,8 @@ var space = ' '
 
 module.exports = function blockPlugin (opts) {
  function blockTokenizer (eat, value, silent) {
+   console.log('=======================\n blockTokenizers: ');
+   console.log(value);
     var length = value.length + 1
     var index = 0
     var subvalue = ''
@@ -46,7 +48,8 @@ module.exports = function blockPlugin (opts) {
     var size
     var now
 
-    // console.log('??')
+    console.log('index: ', index, `[${value.charAt(index)}]`);
+    console.log(typeof lineFeed, `[${lineFeed}]`);
     while (index < length) {
       // Eat everything if there’s no following newline.
       if (index === -1) {
@@ -56,7 +59,9 @@ module.exports = function blockPlugin (opts) {
 
       // Stop if the next character is NEWLINE.
       let c = value.charAt(index + 1)
+      console.log(index+1, 'c:', `[${c}]`);
       if (c != lineFeed && c != space && c != tab) {
+        console.log('break1:', index + 1, 'c:', `[${c}]`);
         break
       }
 
@@ -65,6 +70,7 @@ module.exports = function blockPlugin (opts) {
       // console.log(nc === '    ')
       // console.log(nc, '???')
       if (nc !== '    ') {
+        console.log('break2:', 'nc:', `[${nc}]`);
         break
       }
 
@@ -158,11 +164,23 @@ module.exports = function blockPlugin (opts) {
       }
       let summaryHTML = (magic.processSync(summary).contents)
       // console.log(summaryHTML)
+      console.log("==========================header===============================");
+      console.log(header);
+      console.log("==========================child=================================");
+      console.log(childval);
+      console.log("==========================subvalue==============================");
+      console.log(subvalue);
+      console.log("===============================================================");
 
-      return eat(subvalue)({
+      const func = eat(subvalue);
+      return func({
         type: 'details',
-        data: {hProperties: 
-          {class: 'details', header: header, summary: `${summaryHTML}`}
+        data: {
+          hProperties: {
+            class: 'details',
+            header: header,
+            summary: `${summaryHTML}`
+          }
         },
         header: header,
         value: val,
