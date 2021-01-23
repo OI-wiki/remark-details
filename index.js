@@ -65,13 +65,17 @@ module.exports = function blockPlugin (opts) {
         break
       }
 
-      // Stop if next 4 characters aren't all space
-      let nc = value.slice(index + 1, index + 5)
-      // console.log(nc === '    ')
-      // console.log(nc, '???')
-      if (nc !== '    ') {
-        console.log('break2:', 'nc:', `[${nc}]`);
-        break
+      if(c == lineFeed){ // empty line
+        // ok
+      } else {
+        // Stop if next 4 characters aren't all space
+        let nc = value.slice(index + 1, index + 5)
+        // console.log(nc === '    ')
+        // console.log(nc, '???')
+        if (nc !== '    ') {
+          console.log('break2:', 'nc:', `[${nc}]`);
+          break
+        }
       }
 
       // console.log(value.slice(0, index))
@@ -141,7 +145,7 @@ module.exports = function blockPlugin (opts) {
       childval.forEach((e, idx) => {
         // console.log(e.length)
         if (e.length == 0) {
-          childval[idx] = '\n'
+          // childval[idx] = '\n' // 禁止超级加倍
         } else {
           childval[idx] = e.replace(/\s{4}/, '')
         }
