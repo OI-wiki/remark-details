@@ -17,5 +17,6 @@ remark()
   .use(de)
   // .use(sp)
   .process(www, function(err, res) {
-    console.log(String(res));
+    console.log('finished');
+    // console.log(String(res));
   });

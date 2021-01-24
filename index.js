@@ -6,7 +6,7 @@ var markdown = require('remark-parse')
 var html = require('rehype-stringify')
 
 const magic = unified()
-.use(markdown).use(remark2rehype).use(html)
+  .use(markdown).use(remark2rehype).use(html)
 
 const regex = /(?:^|\n)[\?\!]{3}(\+)? ?(?:([\u4e00-\u9fa5_a-zA-Z0-9\-]+(?: +[\u4e00-\u9fa5_a-zA-Z0-9\-]+)*?)?(?: +"(.*?)")|([\u4e00-\u9fa5_a-zA-Z0-9\-]+(?: +[\u4e00-\u9fa5_a-zA-Z0-9\-]+)*?)) *(?:\n|$)/gm;
 // const regex = /(?:^|\n)[\?\!]{3}(\+)? ?(?:([\w\-]+(?: +[\w\-]+)*?)?(?: +"(.*?)")|([\w\-]+(?: +[\w\-]+)*?)) *(?:\n|$)/gm;
@@ -18,35 +18,38 @@ var space = ' '
 
 
 module.exports = function blockPlugin (opts) {
- function blockTokenizer (eat, value, silent) {
+  function blockTokenizer (eat, value, silent) {
+    // console.log('=======================\n blockTokenizers: ');
+    // console.log(value);
     var length = value.length + 1
     var index = 0
     var subvalue = ''
-    var fenceCount
-    var marker
+    // var fenceCount
+    // var marker
     var character
-    var queue
-    var content
-    var exdentedContent
-    var closing
-    var exdentedClosing
-    var indent
+    // var queue
+    // var content
+    // var exdentedContent
+    // var closing
+    // var exdentedClosing
+    // var indent
     var now
     var self = this
-    var settings = self.options
-    var commonmark = settings.commonmark
-    var gfm = settings.gfm
-    var tokenizers = self.blockTokenizers
-    var interruptors = self.interruptParagraph
+    // var settings = self.options
+    // var commonmark = settings.commonmark
+    // var gfm = settings.gfm
+    // var tokenizers = self.blockTokenizers
+    // var interruptors = self.interruptParagraph
     var index = value.indexOf(lineFeed)
     var length = value.length
     var position
-    var subvalue
+    // var subvalue
     var character
     var size
     var now
 
-    // console.log('??')
+    // console.log('index: ', index, `[${value.charAt(index)}]`);
+    // console.log(typeof lineFeed, `[${lineFeed}]`);
     while (index < length) {
       // Eat everything if there’s no following newline.
       if (index === -1) {
@@ -56,45 +59,50 @@ module.exports = function blockPlugin (opts) {
 
       // Stop if the next character is NEWLINE.
       let c = value.charAt(index + 1)
+      // console.log(index+1, 'c:', `[${c}]`);
       if (c != lineFeed && c != space && c != tab) {
+        // console.log('break1:', index + 1, 'c:', `[${c}]`);
         break
       }
 
-      // Stop if next 4 characters aren't all space
-      let nc = value.slice(index + 1, index + 5)
-      // console.log(nc === '    ')
-      // console.log(nc, '???')
-      if (nc !== '    ') {
-        break
+      if (c == lineFeed) { // empty line
+        // ok
+      } else {
+        // Stop if next 4 characters aren't all space
+        let nc = value.slice(index + 1, index + 5)
+        // console.log(nc === '    ')
+        // console.log(nc, '???')
+        if (nc !== '    ') {
+          // console.log('break2:', 'nc:', `[${nc}]`);
+          break
+        }
       }
 
       // console.log(value.slice(0, index))
       // In commonmark-mode, following indented lines are part of the paragraph.
-      if (true) {
-        size = 0
-        position = index + 1
+      size = 0
+      position = index + 1
 
-        while (position < length) {
-          character = value.charAt(position)
+      while (position < length) {
+        character = value.charAt(position)
 
-          if (character === tab) {
-            size = tabSize
-            break
-          } else if (character === space) {
-            size++
-          } else {
-            break
-          }
-
-          position++
+        if (character === tab) {
+          size = tabSize
+          break
+        } else if (character === space) {
+          size++
+        } else {
+          break
         }
-        if (size >= tabSize && character !== lineFeed) {
-          // console.log(value.slice(0, index), index)
-          index = value.indexOf(lineFeed, index + 1)
-          // console.log(value.slice(0, index), index)
-          // console.log(index)
-          continue
-        }
+
+        position++
+      }
+      if (size >= tabSize && character !== lineFeed) {
+        // console.log(value.slice(0, index), index)
+        index = value.indexOf(lineFeed, index + 1)
+        // console.log(value.slice(0, index), index)
+        // console.log(index)
+        continue
       }
 
       // subvalue = value.slice(index + 1)
@@ -137,7 +145,7 @@ module.exports = function blockPlugin (opts) {
       childval.forEach((e, idx) => {
         // console.log(e.length)
         if (e.length == 0) {
-          childval[idx] = '\n'
+          // childval[idx] = '\n' // 禁止超级加倍
         } else {
           childval[idx] = e.replace(/\s{4}/, '')
         }
@@ -158,11 +166,22 @@ module.exports = function blockPlugin (opts) {
       }
       let summaryHTML = (magic.processSync(summary).contents)
       // console.log(summaryHTML)
+      // console.log("==========================header===============================");
+      // console.log(header);
+      // console.log("==========================child=================================");
+      // console.log(childval);
+      // console.log("==========================subvalue==============================");
+      // console.log(subvalue);
+      // console.log("===============================================================");
 
       return eat(subvalue)({
         type: 'details',
-        data: {hProperties: 
-          {class: 'details', header: header, summary: `${summaryHTML}`}
+        data: {
+          hProperties: {
+            class: 'details',
+            header: header,
+            summary: `${summaryHTML}`
+          }
         },
         header: header,
         value: val,
