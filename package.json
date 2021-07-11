@@ -4,7 +4,8 @@
   "description": "a tokenizer for remark to support details plugin in pymdown",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "release": "zx scripts/release.mjs"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,10 @@
     "remark-stringify": "^9.0.1",
     "unified": "^9.2.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "fs-extra": "^10.0.0",
+    "zx": "^2.0.0"
+  },
   "type": "module"
 }
