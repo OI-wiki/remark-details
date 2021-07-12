@@ -6,9 +6,10 @@ export function detailsHtml(options = {}) {
       },
       detailsContainerSummary() {
         this.tag('<summary>');
+        this.buffer();
       },
       detailsContainerContent() {
-        this.buffer();
+        // TODO
       },
     },
     exit: {
@@ -16,6 +17,7 @@ export function detailsHtml(options = {}) {
         this.tag('</details>');
       },
       detailsContainerSummary() {
+        const data = this.resume();
         this.tag('</summary>');
       },
       detailsExpanded() {
