@@ -27,12 +27,16 @@
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "hastscript": "^7.0.1",
     "micromark": "^3.0.0",
     "prettier": "^2.3.2",
+    "rehype-stringify": "^8.0.0",
     "remark-cli": "^7.0.0",
     "remark-parse": "^9.0.0",
+    "remark-rehype": "^8.1.0",
     "remark-stringify": "^9.0.1",
-    "unified": "^9.2.1"
+    "unified": "^9.2.1",
+    "unist-util-visit": "^3.1.0"
   },
   "dependencies": {
     "child_process": "^1.0.2",
