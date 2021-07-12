@@ -60,12 +60,12 @@ function tokenizeDetailsContainer(effects, ok, nok) {
       effects.enter('detailsExpanded');
       effects.consume(code);
       effects.exit('detailsExpanded');
-      effects.exit('detailsContainerFence');
     } else if (code === codes.space) {
       effects.consume(code);
     } else {
       return nok(code);
     }
+    effects.exit('detailsContainerFence');
     return factorySummary.call(
       self,
       effects,
