@@ -60,6 +60,7 @@ function tokenizeDetailsContainer(effects, ok, nok) {
       effects.enter('detailsExpanded');
       effects.consume(code);
       effects.exit('detailsExpanded');
+      effects.exit('detailsContainerFence');
     } else if (code === codes.space) {
       effects.consume(code);
     } else {
@@ -75,7 +76,6 @@ function tokenizeDetailsContainer(effects, ok, nok) {
   }
   /** @type {State} */
   function afterSummary(code) {
-    effects.exit('detailsContainerFence');
     if (code === codes.eof) {
       return afterOpening(code);
     }
