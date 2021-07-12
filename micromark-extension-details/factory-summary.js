@@ -25,7 +25,7 @@ export function factorySummary(effects, ok, nok, type) {
   }
 }
 
-function is_cn_en(char) {
+export function is_cn_en(char) {
   if (typeof char === 'undefined') {
     return false;
   }
