@@ -1,24 +1,47 @@
-export const detailsHtml = {
-  enter: {
-    detailsMarker() {
-      this.tag('<details ');
+export function detailsHtml(options = {}) {
+  return {
+    enter: {
+      detailsContainer() {
+        this.tag('<details');
+      },
+      detailsContainerSummary() {
+        this.tag('<summary>');
+      },
+      detailsContainerContent() {
+        this.buffer();
+      },
     },
-    detailsExpended() {
-      this.tag('open');
+    exit: {
+      detailsContainer() {
+        this.tag('</details>');
+      },
+      detailsContainerSummary() {
+        this.tag('</summary>');
+      },
+      detailsExpanded() {
+        this.tag(' open');
+      },
+      detailsContainerFence() {
+        this.tag('>');
+      },
     },
-    detailsSummary() {
-      this.tag('<summary>');
-    },
-  },
-  exit: {
-    detailsMarker() {
-      this.tag('>');
-    },
-    detailsSummary() {
-      this.tag('</summary>');
-    },
-    details() {
-      this.tag('</details>');
-    },
-  },
-};
+  };
+
+  /**
+   * @this {CompileContext}
+   * @param {DirectiveType} type
+   */
+  // function enter(type) {
+  // let stack = this.getData('detailsStack');
+  // if (!stack) this.setData('detailsStack', (stack = []));
+  // stack.push({ type, name: '' });
+  //}
+
+  // function exit() {
+  // const details = this.getData('detailsStack').pop();
+  // let found;
+  // let result;
+
+  // if (own.call(option, ))
+  //}
+}
