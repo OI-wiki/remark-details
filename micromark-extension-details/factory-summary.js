@@ -1,4 +1,4 @@
-import { markdownSpace } from 'micromark-util-character';
+import { markdownLineEnding, markdownSpace } from 'micromark-util-character';
 import { codes } from 'micromark-util-symbol/codes.js';
 
 export function factorySummary(effects, ok, nok, type) {
@@ -16,12 +16,7 @@ export function factorySummary(effects, ok, nok, type) {
     return nok(code);
   }
   function summary(code) {
-    if (
-      code === codes.dash ||
-      code === codes.underscore ||
-      markdownSpace(code) ||
-      is_cn_en(code)
-    ) {
+    if (!markdownLineEnding(code)) {
       effects.consume(code);
       return summary;
     }
