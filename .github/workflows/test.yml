@@ -33,8 +33,5 @@ jobs:
       - name: Install
         run: nci
 
-      - name: Lint
-        run: nr lint --if-present
-
       - name: Test
         run: nr test --if-present
