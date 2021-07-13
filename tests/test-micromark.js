@@ -1,5 +1,6 @@
 import test from 'ava';
 import chalk from 'chalk';
+import fs from 'fs';
 import { micromark } from 'micromark';
 
 import {
@@ -7,8 +8,11 @@ import {
   detailsHtml as html,
 } from '../micromark-extension-details/index.js';
 
-function T(num, value) {
+function T(num, value, file) {
   test(`test case #${num}`, async (t) => {
+    if (file) {
+      value = String(fs.readFileSync(`tests/${file}.in.md`));
+    }
     const res = micromark(value, {
       extensions: [syntax()],
       htmlExtensions: [html()],
@@ -40,3 +44,4 @@ T(
     how to do that
 and that`,
 );
+T(5, null, 1);
