@@ -1,19 +1,21 @@
 const types = {
-  containerDirective: 'containerDirective',
+  containerDetails: 'containerDetails',
 };
 
 export const detailsFromMarkdown = {
   enter: {
     detailsContainer: enterContainer,
+    detailsContainerSummary: enterSummary,
   },
   exit: {
     detailsContainer: exit,
+    detailsContainerSummary: exitSummary,
   },
 };
 
 /** @type {FromMarkdownHandle} */
 function enterContainer(token) {
-  enter.call(this, types.containerDirective, token);
+  enter.call(this, types.containerDetails, token);
 }
 /**
  * @this {ThisParameterType<FromMarkdownHandle>}
