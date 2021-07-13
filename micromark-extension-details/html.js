@@ -9,7 +9,7 @@ export function detailsHtml(options = {}) {
         this.buffer();
       },
       detailsContainerContent() {
-        this.tag('<p>');
+        // this.tag('<p>');
       },
     },
     exit: {
@@ -28,7 +28,7 @@ export function detailsHtml(options = {}) {
         this.tag('>');
       },
       detailsContainerContent() {
-        this.tag('</p>');
+        // this.tag('</p>');
       },
     },
   };
