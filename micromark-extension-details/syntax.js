@@ -5,6 +5,8 @@ import { markdownLineEnding } from 'micromark-util-character';
 import { codes } from 'micromark-util-symbol/codes.js';
 import { constants } from 'micromark-util-symbol/constants.js';
 import { types } from 'micromark-util-symbol/types.js';
+
+import { factoryExactSpace } from './factory-exact-space.js';
 import { factorySummary, is_cn_en } from './factory-summary.js';
 
 const nonLazyLine = {
@@ -25,11 +27,11 @@ export function details() {
 function tokenizeDetailsContainer(effects, ok, nok) {
   const self = this;
 
-  const tail = self.events[self.events.length - 1];
-  const initialSize =
-    tail && tail[1].type === types.linePrefix
-      ? tail[2].sliceSerialize(tail[1], true).length
-      : 0;
+  // const tail = self.events[self.events.length - 1];
+  // const initialSize =
+  // tail && tail[1].type === types.linePrefix
+  //? tail[2].sliceSerialize(tail[1], true).length
+  //: 0;
 
   let sizeOpen = 0;
 
@@ -80,16 +82,18 @@ function tokenizeDetailsContainer(effects, ok, nok) {
       return afterOpening(code);
     }
     if (markdownLineEnding(code)) {
-      if (self.interrupt) {
-        return ok(code);
-      }
-      return effects.attempt(nonLazyLine, contentStart, afterOpening)(code);
+      // return effects.attempt(nonLazyLine, contentStart,
+      // afterOpening)(code);
+      effects.enter(types.lineEnding);
+      effects.consume(code);
+      effects.exit(types.lineEnding);
+      return contentStart;
     }
     return nok(code);
   }
   /** @type {State} */
   function contentStart(code) {
-    if (code === code.eof) {
+    if (code === codes.eof) {
       effects.exit('detailsContainer');
       return ok(code);
     }
@@ -101,45 +105,55 @@ function tokenizeDetailsContainer(effects, ok, nok) {
     if (code === codes.eof) {
       return after(code);
     }
-    return effects.attempt(
-      { tokenize: tokenizeClosingFence, partial: true },
-      after,
-      initialSize
-        ? factorySpace(effects, chunkStart, types.linePrefix, initialSize + 1)
-        : chunkStart,
-    )(code);
+    if (!markdownSpace(code)) {
+      return after(code);
+    }
+    // if (initialSize) {
+    // return factorySpace(
+    // effects,
+    // chunkStart,
+    // types.linePrefix,
+    // initialSize + 1,
+    //);
+    //} else {
+    // return chunkStart;
+    //}
+    return factoryExactSpace(effects, chunkStart, nok, types.linePrefix, 4);
   }
   /** @type {State} */
   function chunkStart(code) {
     if (code === codes.eof) {
       return after(code);
     }
-    const token = effects.enter(types.chunkDocument, {
+    effects.enter(types.chunkDocument, {
       contentType: constants.contentTypeDocument,
-      previous,
+      // previous,
     });
-    if (previous) previous.next = token;
-    previous = token;
-    return contentContinue(code);
+    // if (previous) previous.next = token;
+    // previous = token;
+    return contentContinue;
   }
   /** @type {State} */
   function contentContinue(code) {
     if (code === codes.eof) {
-      const token = effects.exit(types.chunkDocument);
-      self.parser.lazy[token.start.line] = false;
+      effects.exit(types.chunkDocument);
+      // self.parser.lazy[token.start.line] = false;
       return after(code);
     }
     if (markdownLineEnding(code)) {
-      return effects.check(nonLazyLine, nonLazyLineAfter, lineAfter)(code);
+      // return effects.check(nonLazyLine, nonLazyLineAfter,
+      // lineAfter)(code);
+      return nonLazyLineAfter;
     }
-    effects.conusme(code);
+    effects.consume(code);
     return contentContinue;
   }
   /** @type {State} */
+  // FIXME: change name for this func
   function nonLazyLineAfter(code) {
-    effects.consume(code);
-    const token = effects.exit(types.chunkDocument);
-    self.parser.lazy[token.start.line] = false;
+    effects.consume(code); // consume line ending
+    effects.exit(types.chunkDocument);
+    // self.parser.lazy[token.start.line] = false;
     return lineStart;
   }
   /** @type {State} */
@@ -158,17 +172,6 @@ function tokenizeDetailsContainer(effects, ok, nok) {
   function afterOpening(code) {
     effects.exit('detailsContainer');
     return ok(code);
-  }
-  /** @type {Tokenizer} */
-  function tokenizeClosingFence(effects, ok, nok) {
-    return check;
-    /** @type {State} */
-    function check(code) {
-      if (is_cn_en(code)) {
-        return ok(code);
-      }
-      return nok(code);
-    }
   }
 }
 /** @type {Tokenizer} */
