@@ -3,14 +3,13 @@ import { codes } from 'micromark-util-symbol/codes.js';
 
 export function factorySummary(effects, ok, nok, type) {
   const self = this;
-  console.log(`consume: `);
 
   return start;
 
   function start(code) {
-    console.log(`code is: ${code}`);
     if (is_cn_en(code)) {
       effects.enter(type);
+      effects.enter('chunkString', { contentType: 'string' });
       effects.consume(code);
       return summary;
     }
@@ -24,11 +23,10 @@ export function factorySummary(effects, ok, nok, type) {
       is_cn_en(code)
     ) {
       effects.consume(code);
-      console.log(`consume: ${code}`);
       return summary;
     }
 
-    console.log('OK');
+    effects.exit('chunkString');
     effects.exit(type);
     return ok(code);
   }

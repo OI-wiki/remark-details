@@ -7,7 +7,7 @@ import {
 } from '../micromark-extension-details/index.js';
 
 test('first', (t) => {
-  const value = `???+arnsono asrineta\ns`;
+  const value = `???+总结如下\ns`;
   const a = micromark(value, {
     extensions: [syntax()],
     htmlExtensions: [html()],

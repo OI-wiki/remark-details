@@ -18,6 +18,7 @@ export function detailsHtml(options = {}) {
       },
       detailsContainerSummary() {
         const data = this.resume();
+        this.raw(data);
         this.tag('</summary>');
       },
       detailsExpanded() {
