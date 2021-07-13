@@ -31,6 +31,7 @@
     "micromark": "^3.0.0",
     "prettier": "^2.3.2",
     "rehype-stringify": "^8.0.0",
+    "remark": "^13.0.0",
     "remark-cli": "^7.0.0",
     "remark-parse": "^9.0.0",
     "remark-rehype": "^8.1.0",
