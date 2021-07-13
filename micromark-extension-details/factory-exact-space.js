@@ -20,16 +20,16 @@ export function factoryExactSpace(effects, ok, nok, type, number) {
   }
   /** @type {State} */
   function prefix(code) {
+    if (size === number) {
+      effects.exit(type);
+      return ok(code);
+    }
     if (markdownSpace(code) && ++size <= number) {
       effects.consume(code);
       return prefix;
     }
 
     effects.exit(type);
-    if (size === number) {
-      return ok(code);
-    } else {
-      return nok(code);
-    }
+    return nok(code);
   }
 }
