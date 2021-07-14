@@ -30,6 +30,9 @@ export function detailsHtml(options = {}) {
       detailsContainerFence() {
         this.tag('>');
       },
+      detailsContainerClassName() {
+        // TODO
+      },
       detailsContainerContent() {
         // this.tag('</p>');
       },
