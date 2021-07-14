@@ -74,18 +74,20 @@ function tokenizeDetailsContainer(effects, ok, nok) {
       effects.enter('detailsExpanded');
       effects.consume(code);
       effects.exit('detailsExpanded');
-    } else if (code === codes.space) {
-      effects.consume(code);
-    } else {
+    } else if (code !== codes.space) {
       return nok(code);
     }
     effects.exit('detailsContainerFence');
-    return factorySummary.call(
-      self,
+    return factorySpace(
       effects,
-      factorySpace(effects, afterSummary, types.whitespace),
-      nok,
-      'detailsContainerSummary',
+      factorySummary.call(
+        self,
+        effects,
+        factorySpace(effects, afterSummary, types.whitespace),
+        nok,
+        'detailsContainerSummary',
+      ),
+      types.whitespace,
     );
   }
   /** @type {State} */
