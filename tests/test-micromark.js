@@ -50,3 +50,22 @@ T(7, null, 3);
 T(8, null, 4);
 T(9, null, 5);
 T(10, null, 6);
+T(
+  11,
+  `!!!+总结如下
+    or nothing`,
+);
+T(
+  12,
+  `???+ note  总结如下
+    how to do the thing`,
+);
+T(
+  13,
+  `???  warning  总结如下
+    how to do the thing
+
+thats all
+thankyou`,
+);
+T(14, null, 7);
