@@ -142,7 +142,7 @@ function tokenizeDetailsContainer(effects, ok, nok) {
       return after(code);
     }
     if (!markdownSpace(code)) {
-      return after(code);
+      return after;
     }
     // if (initialSize) {
     // return factorySpace(
@@ -224,9 +224,9 @@ function tokenizeNonLazyLine(effects, ok, nok) {
     return lineStart;
   }
   /** @type {State} */
-  function lineStart(code) {
-    return self.parser.lazy[self.now().line] ? nok(code) : ok(code);
-  }
+  // function lineStart(code) {
+  // return self.parser.lazy[self.now().line] ? nok(code) : ok(code);
+  //}
 }
 
 function tokenizeDetailsClass(effects, ok, nok) {
