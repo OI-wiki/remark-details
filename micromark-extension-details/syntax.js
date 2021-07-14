@@ -20,7 +20,10 @@ const detailsContainer = {
 };
 export function details() {
   return {
-    flow: { [codes.questionMark]: detailsContainer },
+    flow: {
+      [codes.questionMark]: detailsContainer,
+      [codes.exclamationMark]: detailsContainer,
+    },
   };
 }
 
@@ -33,20 +36,29 @@ function tokenizeDetailsContainer(effects, ok, nok) {
   //? tail[2].sliceSerialize(tail[1], true).length
   //: 0;
 
+  let previous; // previous chunkDocument, L141
+
   let sizeOpen = 0;
+  let openingMark; // can be "?" or "!"
 
-  let previous;
-  return open1;
+  return open;
 
-  function open1(code) {
-    assert(code === codes.questionMark, 'expected `?`');
+  function open(code) {
     effects.enter('detailsContainer');
     effects.enter('detailsContainerFence');
     effects.enter('detailsContainerSequence');
-    return open2(code);
+    if (code === codes.questionMark) {
+      openingMark = codes.questionMark;
+      return open2(code);
+    } else if (code === codes.exclamationMark) {
+      openingMark = codes.exclamationMark;
+      return open2(code);
+    } else {
+      return nok(code);
+    }
   }
   function open2(code) {
-    if (code === codes.questionMark) {
+    if (code === openingMark) {
       effects.consume(code);
       sizeOpen++;
       return open2;
