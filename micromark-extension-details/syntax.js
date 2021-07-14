@@ -125,12 +125,12 @@ function tokenizeDetailsContainer(effects, ok, nok) {
     if (code === codes.eof) {
       return after(code);
     }
-    effects.enter(types.chunkDocument, {
+    const token = effects.enter(types.chunkDocument, {
       contentType: constants.contentTypeDocument,
-      // previous,
+      previous,
     });
-    // if (previous) previous.next = token;
-    // previous = token;
+    if (previous) previous.next = token;
+    previous = token;
     return contentContinue;
   }
   /** @type {State} */
