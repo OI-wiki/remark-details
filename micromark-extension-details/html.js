@@ -11,6 +11,9 @@ export function detailsHtml(options = {}) {
       detailsContainerContent() {
         // this.tag('<p>');
       },
+      detailsContainerClassName() {
+        // TODO
+      },
     },
     exit: {
       detailsContainer() {

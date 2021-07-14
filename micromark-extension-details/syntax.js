@@ -6,12 +6,16 @@ import { codes } from 'micromark-util-symbol/codes.js';
 import { constants } from 'micromark-util-symbol/constants.js';
 import { types } from 'micromark-util-symbol/types.js';
 
+import { factoryDetailsClass } from './factory-details-class.js';
 import { factoryExactSpace } from './factory-exact-space.js';
 import { factorySummary, is_cn_en } from './factory-summary.js';
 
 const nonLazyLine = {
   tokenize: tokenizeNonLazyLine,
   partial: true,
+};
+const detailsClass = {
+  tokenize: tokenizeDetailsClass,
 };
 
 const detailsContainer = {
@@ -78,14 +82,32 @@ function tokenizeDetailsContainer(effects, ok, nok) {
       return nok(code);
     }
     effects.exit('detailsContainerFence');
+
+    // first get space, than try if there is class name
+    // if so try again for space, and then get summary
+    // if not just get summary
     return factorySpace(
       effects,
-      factorySummary.call(
-        self,
-        effects,
-        factorySpace(effects, afterSummary, types.whitespace),
-        nok,
-        'detailsContainerSummary',
+      effects.attempt(
+        detailsClass,
+        factorySpace(
+          effects,
+          factorySummary.call(
+            self,
+            effects,
+            factorySpace(effects, afterSummary, types.whitespace),
+            nok,
+            'detailsContainerSummary',
+          ),
+          types.whitespace,
+        ),
+        factorySummary.call(
+          self,
+          effects,
+          factorySpace(effects, afterSummary, types.whitespace),
+          nok,
+          'detailsContainerSummary',
+        ),
       ),
       types.whitespace,
     );
@@ -205,4 +227,8 @@ function tokenizeNonLazyLine(effects, ok, nok) {
   function lineStart(code) {
     return self.parser.lazy[self.now().line] ? nok(code) : ok(code);
   }
+}
+
+function tokenizeDetailsClass(effects, ok, nok) {
+  return factoryDetailsClass(effects, ok, nok);
 }
