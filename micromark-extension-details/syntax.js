@@ -223,10 +223,6 @@ function tokenizeNonLazyLine(effects, ok, nok) {
     effects.exit(types.lineEnding);
     return lineStart;
   }
-  /** @type {State} */
-  // function lineStart(code) {
-  // return self.parser.lazy[self.now().line] ? nok(code) : ok(code);
-  //}
 }
 
 function tokenizeDetailsClass(effects, ok, nok) {

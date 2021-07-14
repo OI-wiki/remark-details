@@ -7,7 +7,7 @@ export function factorySummary(effects, ok, nok, type) {
   return start;
 
   function start(code) {
-    if (is_cn_en(code)) {
+    if (!markdownLineEnding(code)) {
       effects.enter(type);
       effects.enter('chunkString', { contentType: 'string' });
       effects.consume(code);
