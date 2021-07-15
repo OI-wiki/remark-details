@@ -22,11 +22,13 @@ export function factoryDetailsClass(effects, ok, nok) {
       return nok(code);
     }
     effects.enter('detailsContainerClassName');
+    effects.enter('chunkString', { contentType: 'string' });
     return className;
   }
   function className(code) {
     if (num === detailsClass.length) {
       if (markdownSpace(code)) {
+        effects.exit('chunkString');
         effects.exit('detailsContainerClassName');
         return ok(code);
       } else {
@@ -36,6 +38,7 @@ export function factoryDetailsClass(effects, ok, nok) {
     if (detailsClass[num++] !== String.fromCharCode(code)) {
       return nok(code);
     }
+
     effects.consume(code);
 
     return className;

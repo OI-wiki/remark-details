@@ -4,20 +4,27 @@ export function detailsHtml(options = {}) {
       detailsContainer() {
         this.tag('<details');
       },
+      detailsContainerClassName() {
+        this.tag(` class="`);
+        this.buffer();
+      },
       detailsContainerSummary() {
+        this.tag('>');
         this.tag('<summary>');
         this.buffer();
       },
       detailsContainerContent() {
         // this.tag('<p>');
       },
-      detailsContainerClassName() {
-        // TODO
-      },
     },
     exit: {
       detailsContainer() {
         this.tag('</details>');
+      },
+      detailsContainerClassName() {
+        const data = this.resume();
+        this.tag(data);
+        this.tag(`"`);
       },
       detailsContainerSummary() {
         const data = this.resume();
@@ -27,12 +34,7 @@ export function detailsHtml(options = {}) {
       detailsExpanded() {
         this.tag(' open');
       },
-      detailsContainerFence() {
-        this.tag('>');
-      },
-      detailsContainerClassName() {
-        // TODO
-      },
+      detailsContainerFence() {},
       detailsContainerContent() {
         // this.tag('</p>');
       },
