@@ -1,7 +1,7 @@
 'use strict';
 
 import { details as syntax } from './micromark-extension-details/index.js';
-// import fromMarkdown from 'mdast-util-footnote/from-markdown';
+import { detailsFromMarkdown } from './mdast-util-details/index.js';
 // import toMarkdown from 'mdast-util-footnote/to-markdown';
 
 let warningIssued;
@@ -25,7 +25,7 @@ export default function details(options) {
   }
 
   add('micromarkExtensions', syntax(options));
-  // add('fromMarkdownExtensions', fromMarkdown);
+  add('fromMarkdownExtensions', detailsFromMarkdown);
   // add('toMarkdownExtensions', toMarkdown);
 
   function add(field, value) {

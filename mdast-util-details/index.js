@@ -1,24 +1,32 @@
 export const detailsFromMarkdown = {
   enter: {
     detailsContainer: enterContainer,
+    detailsContainerSummary: enterSummary,
   },
   exit: {
     detailsContainer: exit,
+    detailsContainerSummary: exit,
     detailsExpanded: exitExpanded,
     detailsContainerClassName: exitClassName,
   },
 };
 
 export const detailsToMarkdown = {
-  //
+  // TODO well if you want :sweat_smile:
 };
 
 function enterContainer(token) {
-  enter.call(this, 'details', token);
+  enter.call(this, 'detailsContainer', token, 'details');
+}
+function enterSummary(token) {
+  enter.call(this, 'detailsContainerSummary', token, 'summary');
 }
 
-function enter(type, token) {
-  this.enter({ type: type, name: '', attributes: {}, children: [] }, token);
+function enter(type, token, name) {
+  this.enter(
+    { type: type, name: name || '', attributes: {}, children: [] },
+    token,
+  );
 }
 
 function exitExpanded(token) {
