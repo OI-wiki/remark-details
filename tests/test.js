@@ -12,9 +12,10 @@ import details from '../index.js';
 let num = 0;
 const pluginned = remark()
   .use(parse)
-  .use(details) // the main plugin written, based on micromark
+  // the main plugin written, based on micromark
+  .use(details)
   // the function above, transform details related tags to html-compilable
-  .use(htmlDirectives)
+  .use(htmlDetails)
   .use(remark2rehype)
   .use(stringify);
 
@@ -50,7 +51,7 @@ function T(config) {
   }
 }
 
-function htmlDirectives() {
+function htmlDetails() {
   return transform;
 
   function transform(tree) {
@@ -65,9 +66,6 @@ function htmlDirectives() {
     data.hProperties = hast.properties;
   }
 }
-// pluginned.process('???+ note 总结\n', (err, res) => {
-// console.log(String(res));
-//});
 
 T({
   value: 'hello world',
