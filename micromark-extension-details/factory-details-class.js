@@ -1,5 +1,7 @@
 import { markdownLineEnding, markdownSpace } from 'micromark-util-character';
 import { codes } from 'micromark-util-symbol/codes.js';
+import { constants } from 'micromark-util-symbol/constants.js';
+import { types } from 'micromark-util-symbol/types.js';
 
 export function factoryDetailsClass(effects, ok, nok) {
   const self = this;
@@ -22,13 +24,11 @@ export function factoryDetailsClass(effects, ok, nok) {
       return nok(code);
     }
     effects.enter('detailsContainerClassName');
-    effects.enter('chunkString', { contentType: 'string' });
     return className;
   }
   function className(code) {
     if (num === detailsClass.length) {
       if (markdownSpace(code)) {
-        effects.exit('chunkString');
         effects.exit('detailsContainerClassName');
         return ok(code);
       } else {

@@ -6,7 +6,6 @@ export function detailsHtml(options = {}) {
       },
       detailsContainerClassName() {
         this.tag(` class="`);
-        this.buffer();
       },
       detailsContainerSummary() {
         this.tag('>');
@@ -21,9 +20,8 @@ export function detailsHtml(options = {}) {
       detailsContainer() {
         this.tag('</details>');
       },
-      detailsContainerClassName() {
-        const data = this.resume();
-        this.tag(data);
+      detailsContainerClassName(token) {
+        this.tag(this.sliceSerialize(token));
         this.tag(`"`);
       },
       detailsContainerSummary() {
