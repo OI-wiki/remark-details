@@ -46,7 +46,7 @@ function T(config) {
           extensions: [syntax()],
           htmlExtensions: [html()],
         });
-        console.log(res);
+        // console.log(res);
         t.is(String(res), String(expected), message);
       });
     };
