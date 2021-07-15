@@ -8,30 +8,14 @@ import {
   detailsHtml as html,
 } from '../micromark-extension-details/index.js';
 
-// function T(num, value, file) {
-// test(`test case #${num}`, async (t) => {
-// if (file) {
-// value = String(fs.readFileSync(`tests/${file}.in.md`));
-//}
-// const res = micromark(value, {
-// extensions: [syntax()],
-// htmlExtensions: [html()],
-//});
-// console.log(chalk.blue(`==Test case#${num}==`));
-// console.log(value);
-// console.log('=======>');
-// console.log(res);
-// console.log();
-// t.pass();
-//});
-//}
-
-// interface config {
-// value: string,
-// expected: string,
-// isFile?: boolean,
-// message?: string,
-//}
+/*
+ * interface config {
+ * value: string,
+ * expected: string,
+ * isFile?: boolean,
+ * message?: string,
+ *}
+ */
 let num = 0;
 function T(config) {
   if (config.isFile) {
