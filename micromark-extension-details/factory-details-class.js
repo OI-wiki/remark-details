@@ -9,6 +9,7 @@ export function factoryDetailsClass(effects, ok, nok) {
   const classes = {
     note: 'note',
     warning: 'warning',
+    question: 'question',
   };
   let detailsClass;
   let num = 0;
@@ -20,6 +21,8 @@ export function factoryDetailsClass(effects, ok, nok) {
       detailsClass = classes.note;
     } else if (code === codes.lowercaseW) {
       detailsClass = classes.warning;
+    } else if (code === codes.lowercaseQ) {
+      detailsClass = classes.question;
     } else {
       return nok(code);
     }
