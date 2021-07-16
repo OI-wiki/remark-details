@@ -11,8 +11,8 @@ export function factorySummary(effects, ok, nok, type) {
   function start(code) {
     if (!markdownLineEnding(code)) {
       effects.enter(type);
-      effects.enter(types.chunkContent, {
-        contentType: constants.contentTypeContent,
+      effects.enter(types.chunkText, {
+        contentType: constants.contentTypeText,
       });
       effects.consume(code);
       return summary;
@@ -25,7 +25,7 @@ export function factorySummary(effects, ok, nok, type) {
       return summary;
     }
 
-    effects.exit(types.chunkContent);
+    effects.exit(types.chunkText);
     effects.exit(type);
     return ok(code);
   }
