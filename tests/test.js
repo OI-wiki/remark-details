@@ -1,4 +1,5 @@
 import test from 'ava';
+import fs from 'fs';
 import { h } from 'hastscript';
 import stringify from 'rehype-stringify';
 import remark from 'remark';
@@ -19,6 +20,14 @@ const pluginned = remark()
   .use(remark2rehype)
   .use(stringify);
 
+/*
+ *interface config {
+ *  isFile?: boolean;
+ *  value: string;
+ *  expected: string;
+ *  message?: string;
+ *}
+ */
 function T(config) {
   if (config.isFile) {
     return function (
@@ -28,10 +37,13 @@ function T(config) {
     ) {
       num++;
       test(`test case ${num}`, (t) => {
-        const outfile = String(fs.readFileSync(expected));
-        pluginned.process(String(fs.readFileSync(value)), (err, res) => {
-          t.is(String(res), String(outfile), message);
-        });
+        const outfile = String(fs.readFileSync(`tests/${expected}`));
+        pluginned.process(
+          String(fs.readFileSync(`tests/${value}`)),
+          (err, res) => {
+            t.is(String(res), String(outfile).trimEnd(), message);
+          },
+        );
       });
     };
   } else {
@@ -43,7 +55,7 @@ function T(config) {
       num++;
       test(`test case ${num}`, (t) => {
         pluginned.process(value, (err, res) => {
-          // console.log('RESULT: ', String(res));
+          // isFile: true,console.log('RESULT: ', String(res));
           t.is(String(res), String(expected), message);
         });
       });
@@ -74,33 +86,34 @@ T({
 })();
 T({
   value: '???+总结如下\n',
-  expected: '<details open><summary>总结如下</summary></details>',
+  expected: '<details open><summary><p>总结如下</p></summary></details>',
   message: 'no content details',
 })();
 T({
   value: '???+ note 总结\n',
-  expected: '<details open class="note"><summary>总结</summary></details>',
+  expected:
+    '<details open class="note"><summary><p>总结</p></summary></details>',
   message: 'no content details with note',
 })();
 T({
   value: `???+ 总结
     how to do this`,
   expected:
-    '<details open><summary>总结</summary><p>how to do this</p></details>',
+    '<details open><summary><p>总结</p></summary><p>how to do this</p></details>',
   message: 'details without note',
 })();
 T({
   value: `???+ note 总结
     how to do this`,
   expected:
-    '<details open class="note"><summary>总结</summary><p>how to do this</p></details>',
+    '<details open class="note"><summary><p>总结</p></summary><p>how to do this</p></details>',
   message: 'details with note',
 })();
 T({
   value: `???+ note 总结
     how to do this
     how to do that`,
-  expected: `<details open class="note"><summary>总结</summary><p>how to do this
+  expected: `<details open class="note"><summary><p>总结</p></summary><p>how to do this
 how to do that</p></details>`,
   message: 'details with note',
 })();
@@ -110,7 +123,7 @@ T({
     that is the question
 
 but now it is not`,
-  expected: `<details open class="note"><summary>总结</summary><p>to be or not to be
+  expected: `<details open class="note"><summary><p>总结</p></summary><p>to be or not to be
 that is the question</p></details>
 <p>but now it is not</p>`,
   message: 'details with note',
@@ -121,7 +134,7 @@ T({
     that is the question
 
 but now it is not`,
-  expected: `<details open class="note"><summary>总结</summary><p>to be or not to be
+  expected: `<details open class="note"><summary><p>总结</p></summary><p>to be or not to be
 that is the question</p></details>
 <p>but now it is not</p>`,
   message: 'details with note',
@@ -138,7 +151,7 @@ T({
     \`\`\`
 
 if not me, who`,
-  expected: `<details open class="warning"><summary>总结</summary><p>The sunlight claps the earth,
+  expected: `<details open class="warning"><summary><p>总结</p></summary><p>The sunlight claps the earth,
 and the moonbeams kiss the sea:
 what are all these kissings worth,</p><pre><code class="language-cpp">for (int i = 0; i &#x3C;= 100; i++) {
     cout &#x3C;&#x3C; "if thou kiss not me?" &#x3C;&#x3C; endl;
@@ -153,10 +166,23 @@ T({
     And I will taste no other wine tonight
 
 thats it`,
-  expected: `<details open class="note"><summary>总结</summary><blockquote>
+  expected: `<details open class="note"><summary><p>总结</p></summary><blockquote>
 <p>I have drunken deep of joy,
 And I will taste no other wine tonight</p>
 </blockquote></details>
 <p>thats it</p>`,
   message: 'details with note and blockquote',
 });
+T({
+  value: `???+ warning \`warning\`
+    write something here`,
+  expected: `<details open class="warning"><summary><p><code>warning</code></p></summary><p>write something here</p></details>`,
+  message: '',
+})();
+T({ isFile: true, value: '8.in.md', expected: '8.out.md', message: '' })();
+T({
+  isFile: true,
+  value: '9.in.md',
+  expected: '9.out.md',
+  message: 'details with many codes',
+})();
