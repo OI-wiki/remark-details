@@ -86,34 +86,33 @@ T({
 })();
 T({
   value: '???+总结如下\n',
-  expected: '<details open><summary><p>总结如下</p></summary></details>',
+  expected: '<details open><summary>总结如下</summary></details>',
   message: 'no content details',
 })();
 T({
   value: '???+ note 总结\n',
-  expected:
-    '<details open class="note"><summary><p>总结</p></summary></details>',
+  expected: '<details open class="note"><summary>总结</summary></details>',
   message: 'no content details with note',
 })();
 T({
   value: `???+ 总结
     how to do this`,
   expected:
-    '<details open><summary><p>总结</p></summary><p>how to do this</p></details>',
+    '<details open><summary>总结</summary><p>how to do this</p></details>',
   message: 'details without note',
 })();
 T({
   value: `???+ note 总结
     how to do this`,
   expected:
-    '<details open class="note"><summary><p>总结</p></summary><p>how to do this</p></details>',
+    '<details open class="note"><summary>总结</summary><p>how to do this</p></details>',
   message: 'details with note',
 })();
 T({
   value: `???+ note 总结
     how to do this
     how to do that`,
-  expected: `<details open class="note"><summary><p>总结</p></summary><p>how to do this
+  expected: `<details open class="note"><summary>总结</summary><p>how to do this
 how to do that</p></details>`,
   message: 'details with note',
 })();
@@ -123,7 +122,7 @@ T({
     that is the question
 
 but now it is not`,
-  expected: `<details open class="note"><summary><p>总结</p></summary><p>to be or not to be
+  expected: `<details open class="note"><summary>总结</summary><p>to be or not to be
 that is the question</p></details>
 <p>but now it is not</p>`,
   message: 'details with note',
@@ -134,7 +133,7 @@ T({
     that is the question
 
 but now it is not`,
-  expected: `<details open class="note"><summary><p>总结</p></summary><p>to be or not to be
+  expected: `<details open class="note"><summary>总结</summary><p>to be or not to be
 that is the question</p></details>
 <p>but now it is not</p>`,
   message: 'details with note',
@@ -151,7 +150,7 @@ T({
     \`\`\`
 
 if not me, who`,
-  expected: `<details open class="warning"><summary><p>总结</p></summary><p>The sunlight claps the earth,
+  expected: `<details open class="warning"><summary>总结</summary><p>The sunlight claps the earth,
 and the moonbeams kiss the sea:
 what are all these kissings worth,</p><pre><code class="language-cpp">for (int i = 0; i &#x3C;= 100; i++) {
     cout &#x3C;&#x3C; "if thou kiss not me?" &#x3C;&#x3C; endl;
@@ -166,7 +165,7 @@ T({
     And I will taste no other wine tonight
 
 thats it`,
-  expected: `<details open class="note"><summary><p>总结</p></summary><blockquote>
+  expected: `<details open class="note"><summary>总结</summary><blockquote>
 <p>I have drunken deep of joy,
 And I will taste no other wine tonight</p>
 </blockquote></details>
@@ -176,7 +175,7 @@ And I will taste no other wine tonight</p>
 T({
   value: `???+ warning \`warning\`
     write something here`,
-  expected: `<details open class="warning"><summary><p><code>warning</code></p></summary><p>write something here</p></details>`,
+  expected: `<details open class="warning"><summary><code>warning</code></summary><p>write something here</p></details>`,
   message: '',
 })();
 T({ isFile: true, value: '8.in.md', expected: '8.out.md', message: '' })();
@@ -184,5 +183,29 @@ T({
   isFile: true,
   value: '9.in.md',
   expected: '9.out.md',
+  message: 'details with many codes',
+})();
+T({
+  isFile: true,
+  value: '10.in.md',
+  expected: '10.out.md',
+  message: 'details with many codes',
+})();
+T({
+  isFile: true,
+  value: '11.in.md',
+  expected: '11.out.md',
+  message: 'details with many codes',
+})();
+T({
+  isFile: true,
+  value: '12.in.md',
+  expected: '12.out.md',
+  message: 'details with many codes',
+})();
+T({
+  isFile: true,
+  value: '13.in.md',
+  expected: '13.out.md',
   message: 'details with many codes',
 })();

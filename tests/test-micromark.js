@@ -60,19 +60,17 @@ T({
 })();
 T({
   value: '???+总结如下\n',
-  expected: '<details open><summary><p>总结如下</p></summary>\n</details>',
+  expected: '<details open><summary>总结如下</summary>\n</details>',
   message: 'no content details',
 })();
 T({
   value: '???+ note 总结\n',
-  expected:
-    '<details open class="note"><summary><p>总结</p></summary>\n</details>',
+  expected: '<details open class="note"><summary>总结</summary>\n</details>',
   message: 'no content details with note',
 })();
 T({
   value: '???+ warning 总结\n',
-  expected:
-    '<details open class="warning"><summary><p>总结</p></summary>\n</details>',
+  expected: '<details open class="warning"><summary>总结</summary>\n</details>',
   message: 'no content details with warning',
 })();
 // T(
