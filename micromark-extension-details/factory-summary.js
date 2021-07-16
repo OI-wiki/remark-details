@@ -1,5 +1,7 @@
 import { markdownLineEnding, markdownSpace } from 'micromark-util-character';
 import { codes } from 'micromark-util-symbol/codes.js';
+import { constants } from 'micromark-util-symbol/constants.js';
+import { types } from 'micromark-util-symbol/types.js';
 
 export function factorySummary(effects, ok, nok, type) {
   const self = this;
@@ -9,7 +11,9 @@ export function factorySummary(effects, ok, nok, type) {
   function start(code) {
     if (!markdownLineEnding(code)) {
       effects.enter(type);
-      effects.enter('chunkString', { contentType: 'string' });
+      effects.enter(types.chunkContent, {
+        contentType: constants.contentTypeContent,
+      });
       effects.consume(code);
       return summary;
     }
@@ -21,7 +25,7 @@ export function factorySummary(effects, ok, nok, type) {
       return summary;
     }
 
-    effects.exit('chunkString');
+    effects.exit(types.chunkContent);
     effects.exit(type);
     return ok(code);
   }
