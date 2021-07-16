@@ -16,6 +16,7 @@ export const detailsToMarkdown = {
 };
 
 function enterContainer(token) {
+  this.setData('detailsAttributes', []);
   enter.call(this, 'detailsContainer', token, 'details');
 }
 function enterSummary(token) {
@@ -46,7 +47,6 @@ function enter(type, token, name) {
 }
 
 function exitExpanded(token) {
-  this.setData('detailsAttributes', []);
   this.getData('detailsAttributes').push(['open', true]);
 }
 function exitClassName(token) {
