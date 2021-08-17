@@ -8,7 +8,7 @@ import remark2rehype from 'remark-rehype';
 import unified from 'unified';
 import { visit } from 'unist-util-visit';
 
-import details from '../index.js';
+import remarkDetails from '../index.js';
 
 let num = 0;
 const pluginned = remark()

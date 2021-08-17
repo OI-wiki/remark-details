@@ -1,4 +1,4 @@
-export function detailsHtml(options = {}) {
+export function detailsHtml() {
   return {
     enter: {
       detailsContainer() {
@@ -38,22 +38,4 @@ export function detailsHtml(options = {}) {
       },
     },
   };
-
-  /**
-   * @this {CompileContext}
-   * @param {DirectiveType} type
-   */
-  // function enter(type) {
-  // let stack = this.getData('detailsStack');
-  // if (!stack) this.setData('detailsStack', (stack = []));
-  // stack.push({ type, name: '' });
-  //}
-
-  // function exit() {
-  // const details = this.getData('detailsStack').pop();
-  // let found;
-  // let result;
-
-  // if (own.call(option, ))
-  //}
 }

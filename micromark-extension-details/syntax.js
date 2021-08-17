@@ -8,7 +8,7 @@ import { types } from 'micromark-util-symbol/types.js';
 
 import { factoryDetailsClass } from './factory-details-class.js';
 import { factoryExactSpace } from './factory-exact-space.js';
-import { factorySummary, is_cn_en } from './factory-summary.js';
+import { factorySummary } from './factory-summary.js';
 
 const nonLazyLine = {
   tokenize: tokenizeNonLazyLine,
@@ -22,7 +22,7 @@ const detailsContainer = {
   tokenize: tokenizeDetailsContainer,
   concrete: true,
 };
-export function details() {
+export default function syntax() {
   return {
     flow: {
       [codes.questionMark]: detailsContainer,

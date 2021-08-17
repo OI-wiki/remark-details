@@ -1,2 +1,3 @@
 export { detailsHtml } from './html.js';
-export { details } from './syntax.js';
+import syntax from './syntax.js';
+export default syntax;

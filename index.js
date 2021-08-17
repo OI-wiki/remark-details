@@ -1,12 +1,12 @@
 'use strict';
 
-import { details as syntax } from './micromark-extension-details/index.js';
+import syntax from './micromark-extension-details/index.js';
 import { detailsFromMarkdown } from './mdast-util-details/index.js';
 // import toMarkdown from 'mdast-util-footnote/to-markdown';
 
 let warningIssued;
 
-export default function details(options) {
+export default function remarkDetails() {
   const data = this.data();
   // warning for old remarks
   if (
@@ -24,7 +24,7 @@ export default function details(options) {
     );
   }
 
-  add('micromarkExtensions', syntax(options));
+  add('micromarkExtensions', syntax());
   add('fromMarkdownExtensions', detailsFromMarkdown);
   // add('toMarkdownExtensions', toMarkdown);
 
