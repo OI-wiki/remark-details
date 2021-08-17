@@ -40,6 +40,7 @@
     "unist-util-visit": "^3.1.0"
   },
   "dependencies": {
+    "assert": "^2.0.0",
     "child_process": "^1.0.2",
     "fs-extra": "^10.0.0",
     "micromark-factory-space": "^1.0.0",
