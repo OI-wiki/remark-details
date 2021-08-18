@@ -5,9 +5,9 @@ import { markdownLineEnding } from 'micromark-util-character';
 import { codes } from 'micromark-util-symbol/codes.js';
 import { constants } from 'micromark-util-symbol/constants.js';
 import { types } from 'micromark-util-symbol/types.js';
-import { factoryDetailsClass } from './factory-details-class.js';
-import { factoryExactSpace } from './factory-exact-space.js';
-import { factorySummary } from './factory-summary.js';
+import { factoryDetailsClass } from './factory-details-class.js.js';
+import { factoryExactSpace } from './factory-exact-space.js.js';
+import { factorySummary } from './factory-summary.js.js';
 
 const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 	console.log("container");

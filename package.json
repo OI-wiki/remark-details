@@ -2,7 +2,7 @@
 	"name": "remark-details",
 	"version": "3.0.0",
 	"description": "a tokenizer for remark to support details plugin in pymdown",
-	"main": "index.js",
+	"main": "lib/index.js",
 	"type": "module",
 	"scripts": {
 		"test": "tsc && ava",

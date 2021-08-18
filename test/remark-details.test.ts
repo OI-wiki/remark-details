@@ -6,7 +6,7 @@ import remark2rehype from 'remark-rehype';
 import { visit } from 'unist-util-visit';
 import { h } from 'hastscript';
 import testCase, { fromPath } from './test-case.js';
-import remarkDetails from '../index.js';
+import remarkDetails from '../src/index.js';
 
 const htmlDetails: Plugin<[], Root, Root> = function (): Transformer<Root> {
 	return (tree: Root) => {

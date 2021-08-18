@@ -1,5 +1,5 @@
 import { Plugin } from "unified";
-import { syntax } from './micromark-extension-details/index.js';
+import { syntax } from './micromark-details/index.js';
 import { detailsFromMarkdown } from './mdast-util-details/index.js';
 
 let warningIssued;

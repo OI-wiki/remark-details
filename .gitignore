@@ -1,7 +1,5 @@
 # Build result
-*.js
-*.d.ts
-*.map
+/lib
 
 # Test result
 /tests/output
