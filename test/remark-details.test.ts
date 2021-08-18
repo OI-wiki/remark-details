@@ -6,7 +6,7 @@ import remark2rehype from 'remark-rehype';
 import { visit } from 'unist-util-visit';
 import { h } from 'hastscript';
 import testCase, { fromPath } from './test-case.js';
-import remarkDetails from '../src/index.js';
+import remarkDetails from '../lib/index.js';
 
 const htmlDetails: Plugin<[], Root, Root> = function (): Transformer<Root> {
 	return (tree: Root) => {
@@ -131,8 +131,8 @@ testCase({
 });
 for (let i = 8; i <= 13; ++i) {
 	testCase({
-		input: fromPath(`input/${i}.md`),
-		expected: fromPath(`expected/${i}.md`),
+		input: fromPath(`test/input/${i}.md`),
+		expected: fromPath(`test/expected/${i}.md`),
 		message: 'details with many codes'
 	});
 }

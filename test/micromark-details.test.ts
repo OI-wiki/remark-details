@@ -1,6 +1,6 @@
 import testCase from "./test-case.js";
 import { micromark } from 'micromark';
-import { syntax, detailsHtml as html, } from '../src/micromark-details/index.js';
+import { syntax, detailsHtml as html, } from '../lib/micromark-details/index.js';
 
 testCase.processor = (input: string) => {
 	return micromark(input, {

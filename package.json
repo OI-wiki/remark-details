@@ -5,8 +5,8 @@
 	"main": "lib/index.js",
 	"type": "module",
 	"scripts": {
-		"test": "cd tests && tsc && ava",
 		"build": "tsc",
+		"test": "npm run build && cd test && tsc && ava",
 		"release": "npm run build && zx scripts/release.mjs"
 	},
 	"repository": {
