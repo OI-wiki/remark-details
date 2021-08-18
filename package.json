@@ -5,7 +5,7 @@
 	"main": "lib/index.js",
 	"type": "module",
 	"scripts": {
-		"test": "tsc && ava",
+		"test": "cd tests && tsc && ava",
 		"build": "tsc",
 		"release": "npm run build && zx scripts/release.mjs"
 	},

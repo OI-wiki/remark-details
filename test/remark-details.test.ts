@@ -131,8 +131,8 @@ testCase({
 });
 for (let i = 8; i <= 13; ++i) {
 	testCase({
-		input: fromPath(`tests/input/${i}.md`),
-		expected: fromPath(`tests/expected/${i}.md`),
+		input: fromPath(`input/${i}.md`),
+		expected: fromPath(`expected/${i}.md`),
 		message: 'details with many codes'
 	});
 }
