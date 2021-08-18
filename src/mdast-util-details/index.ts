@@ -25,9 +25,11 @@ export const fromMarkdownDetails: Extension = {
 		detailsContainerSummary: function (token) {
 			// pushin all the attributes for <details> tag before entering <summary> tag
 			const attributes = getDetailsAttributes(this);
-			const cleaned = {
+			const cleaned: {
+				open: boolean,
+				class?: string
+			} = {
 				open: false,
-				class: ""
 			}
 			const classes: string[] = [];
 			for (const attribute of attributes) {
@@ -36,7 +38,8 @@ export const fromMarkdownDetails: Extension = {
 				else
 					cleaned.open = attribute[1];
 			}
-			cleaned.class = classes.join(' ');
+			if (classes.length > 0)
+				cleaned.class = classes.join(' ');
 			this.setData('detailsAttributes');
 			(this.stack[this.stack.length - 1] as any).attributes = cleaned;
 			enter.call(this, 'detailsContainerSummary', token, 'summary');
