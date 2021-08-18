@@ -1,5 +1,12 @@
-TODOs.todo.md
-#
+# Build result
+/lib
+*.d.ts
+*.js
+*.map
+
+# Test result
+/tests/output
+
 # Logs
 logs
 *.log
