@@ -19,7 +19,7 @@ const testCase = <TestCase>function (config: TestCaseConfig, processor?: (input:
 	const input = typeof (config.input) == "string" ? config.input : FileSystem.readFileSync(config.input.path).toString();
 	const expected = typeof (config.expected) == "string" ? config.expected : FileSystem.readFileSync(config.expected.path).toString();
 	const process = processor ?? testCase.processor;
-	const name = `Test Case ${++testCase.count}` + config.name ? `: ${config.name}` : "";
+	const name = `Test Case ${++testCase.count}` + (config.name ? `: ${config.name}` : "");
 	test(name, ava => {
 		const actual = process(input);
 		ava.is(actual, expected, config.message);
