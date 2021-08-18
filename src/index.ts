@@ -2,7 +2,7 @@ import { Plugin } from "unified";
 import { syntax } from './micromark-details/index.js';
 import { fromMarkdownDetails } from './mdast-util-details/index.js';
 
-let warningIssued;
+let warningIssued = false;
 const remarkDetails: Plugin = function () {
 	const data = this.data() as Record<string, unknown[] | undefined>;
 	// warning for old remarks
