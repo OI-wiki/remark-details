@@ -1,18 +1,17 @@
-import { Tokenizer, State, Extension } from 'micromark-util-types';
+import { Tokenizer, State, Extension, Token } from 'micromark-util-types';
 import { factorySpace } from 'micromark-factory-space';
 import { markdownSpace } from 'micromark-util-character';
 import { markdownLineEnding } from 'micromark-util-character';
 import { codes } from 'micromark-util-symbol/codes.js';
 import { constants } from 'micromark-util-symbol/constants.js';
 import { types } from 'micromark-util-symbol/types.js';
-import { factoryDetailsClass } from './factory-details-class.js.js';
-import { factoryExactSpace } from './factory-exact-space.js.js';
-import { factorySummary } from './factory-summary.js.js';
+import { factoryDetailsClass } from './factory-details-class.js';
+import { factoryExactSpace } from './factory-exact-space.js';
+import { factorySummary } from './factory-summary.js';
 
 const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
-	console.log("container");
 	const ctx = this;
-	let previous; // previous chunkDocument, L141
+	let previous: Token; // previous chunkDocument, L141
 	let sizeOpen = 0;
 	let openingMark: number; // can be "?" or "!"
 

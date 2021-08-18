@@ -1,6 +1,6 @@
 import { Plugin } from "unified";
 import { syntax } from './micromark-details/index.js';
-import { detailsFromMarkdown } from './mdast-util-details/index.js';
+import { fromMarkdownDetails } from './mdast-util-details/index.js';
 
 let warningIssued;
 const remarkDetails: Plugin = function () {
@@ -20,6 +20,6 @@ const remarkDetails: Plugin = function () {
 	}
 
 	add('micromarkExtensions', syntax);
-	add('fromMarkdownExtensions', detailsFromMarkdown);
+	add('fromMarkdownExtensions', fromMarkdownDetails);
 }
 export default remarkDetails;
