@@ -7,7 +7,8 @@
 	"scripts": {
 		"build": "tsc",
 		"test": "npm run build && cd test && tsc && ava",
-		"release": "npm run build && zx scripts/release.mjs"
+		"release": "npm run build && zx scripts/release.mjs",
+		"prepublishOnly": "npm run build"
 	},
 	"repository": {
 		"type": "git",
@@ -15,8 +16,7 @@
 	},
 	"keywords": [
 		"remark",
-		"markdown",
-		"latex"
+		"markdown"
 	],
 	"author": "Ir1d",
 	"contributes": [
