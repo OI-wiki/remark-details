@@ -1,7 +1,10 @@
-# Build result
-/lib
-*.d.ts
+# Build results
 *.js
+!/lib/**/*.js
+*.d.ts
+!/lib/**/*.d.ts
+
+# Source maps
 *.map
 
 # Test result
