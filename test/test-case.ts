@@ -17,11 +17,13 @@ interface TestCase {
 
 const testCase = <TestCase>function (config: TestCaseConfig, processor?: (input: string) => string) {
 	const input = typeof (config.input) == "string" ? config.input : FileSystem.readFileSync(config.input.path).toString();
-	const expected = typeof (config.expected) == "string" ? config.expected : FileSystem.readFileSync(config.expected.path).toString();
+	let expected = typeof (config.expected) == "string" ? config.expected : FileSystem.readFileSync(config.expected.path).toString();
 	const process = processor ?? testCase.processor;
 	const name = `Test Case ${++testCase.count}` + (config.name ? `: ${config.name}` : "");
 	test(name, ava => {
-		const actual = process(input);
+		let actual = process(input);
+        expected = expected.trim();
+        actual = actual.trim();
 		ava.is(actual, expected, config.message);
 	});
 }
