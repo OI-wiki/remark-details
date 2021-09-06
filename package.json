@@ -1,48 +1,67 @@
 {
-  "name": "remark-details",
-  "version": "3.0.0",
-  "description": "a tokenizer for remark to support details plugin in pymdown",
-  "main": "index.js",
-  "scripts": {
-    "test": "ava",
-    "release": "zx scripts/release.mjs"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Ir1d/remark-details.git"
-  },
-  "keywords": [
-    "remark",
-    "markdown",
-    "latex"
-  ],
-  "author": "Ir1d",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Ir1d/remark-details/issues"
-  },
-  "homepage": "https://github.com/Ir1d/remark-details#readme",
-  "devDependencies": {
-    "ava": "^3.15.0",
-    "eslint": "^7.30.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "hastscript": "^7.0.1",
-    "micromark": "^3.0.0",
-    "prettier": "^2.3.2",
-    "rehype-stringify": "^8.0.0",
-    "remark": "^13.0.0",
-    "remark-cli": "^9.0.0",
-    "remark-parse": "^9.0.0",
-    "remark-rehype": "^8.1.0",
-    "remark-stringify": "^9.0.1",
-    "unified": "^9.2.1",
-    "unist-util-visit": "^3.1.0"
-  },
-  "dependencies": {
-    "child_process": "^1.0.2",
-    "fs-extra": "^10.0.0",
-    "zx": "^2.0.0"
-  },
-  "type": "module"
+	"name": "remark-details",
+	"version": "3.1.0",
+	"description": "a tokenizer for remark to support details plugin in pymdown",
+	"main": "lib/index.js",
+	"type": "module",
+	"scripts": {
+		"build": "tsc",
+		"test": "npm run build && cd test && tsc && ava",
+		"release": "npm run build && zx scripts/release.mjs",
+		"prepublishOnly": "npm run build"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Ir1d/remark-details.git"
+	},
+	"keywords": [
+		"remark",
+		"markdown"
+	],
+	"author": "Ir1d",
+	"contributes": [
+		{
+			"name": "ahacad",
+			"email": "ahacad@126.com"
+		},
+		{
+			"name": "true_mogician",
+			"email": "truemogician@gmail.com"
+		}
+	],
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Ir1d/remark-details/issues"
+	},
+	"homepage": "https://github.com/Ir1d/remark-details#readme",
+	"devDependencies": {
+		"ava": "^3.15.0",
+		"child_process": "^1.0.2",
+		"eslint": "^7.30.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-prettier": "^3.4.0",
+		"fs-extra": "^10.0.0",
+		"hastscript": "^7.0.1",
+		"micromark": "^3.0.0",
+		"prettier": "^2.3.2",
+		"rehype-stringify": "^8.0.0",
+		"remark": "^13.0.0",
+		"remark-cli": "^9.0.0",
+		"remark-parse": "^9.0.0",
+		"remark-rehype": "^8.1.0",
+		"remark-stringify": "^9.0.1",
+		"to-vfile": "^7.2.1",
+		"ts-node": "^10.2.0",
+		"typescript": "^4.4.2",
+		"unified": "^10.1.0",
+		"unified-printer": "^1.1.3",
+		"unist-util-visit": "^3.1.0",
+		"vfile": "^5.0.2",
+		"zx": "^2.0.0"
+	},
+	"dependencies": {
+		"mdast-util-from-markdown": "^1.0.0",
+		"micromark-factory-space": "^1.0.0",
+		"micromark-util-types": "^1.0.0"
+	}
 }
