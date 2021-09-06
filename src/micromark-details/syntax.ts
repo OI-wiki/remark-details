@@ -11,7 +11,7 @@ import { factorySummary } from './factory-summary.js';
 
 const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 	const ctx = this;
-	let previous: Token; // previous chunkDocument, L141
+	let previous: Token;
 	let sizeOpen = 0;
 	let openingMark: number; // can be "?" or "!"
 
