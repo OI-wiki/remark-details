@@ -1,3 +1,3 @@
-import { Plugin } from "unified";
+import { Plugin } from 'unified';
 declare const remarkDetails: Plugin;
 export default remarkDetails;
