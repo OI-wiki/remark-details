@@ -1,3 +1,15 @@
+# Build results
+*.js
+!/lib/**/*.js
+*.d.ts
+!/lib/**/*.d.ts
+
+# Source maps
+*.map
+
+# Test result
+/tests/output
+
 # Logs
 logs
 *.log
