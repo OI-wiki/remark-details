@@ -1,4 +1,4 @@
-import { Extension } from "mdast-util-from-markdown/lib";
+import { Extension } from 'mdast-util-from-markdown/lib';
 export const detailsHtml: Extension = {
 	enter: {
 		detailsContainer() {
@@ -32,9 +32,9 @@ export const detailsHtml: Extension = {
 		detailsExpanded() {
 			(this as any).tag(' open');
 		},
-		detailsContainerFence() { },
+		detailsContainerFence() {},
 		detailsContainerContent() {
 			// this.tag('</p>');
 		},
 	},
-}
+};

@@ -1,7 +1,13 @@
 import { markdownSpace } from 'micromark-util-character';
 import { Code, Effects, State } from 'micromark-util-types';
 
-export function factoryExactSpace(effects: Effects, ok: State, nok: State, type: string, number: number): State {
+export function factoryExactSpace(
+	effects: Effects,
+	ok: State,
+	nok: State,
+	type: string,
+	number: number,
+): State {
 	let size = 0;
 	const prefix: State = function (code) {
 		if (size === number) {
@@ -14,11 +20,11 @@ export function factoryExactSpace(effects: Effects, ok: State, nok: State, type:
 		}
 		effects.exit(type);
 		return nok(code);
-	}
+	};
 	return (code) => {
 		if (markdownSpace(code)) {
 			effects.enter(type);
 			return prefix(code);
 		}
-	}
+	};
 }

@@ -18,8 +18,8 @@ export const factoryDetailsClass: Tokenizer = function (effects, ok, nok) {
 			return nok(code);
 		effects.consume(code);
 		return className;
-	}
-	return code => {
+	};
+	return (code) => {
 		switch (code) {
 			case codes.lowercaseN:
 				detailsClass = 'note';
@@ -35,5 +35,5 @@ export const factoryDetailsClass: Tokenizer = function (effects, ok, nok) {
 		}
 		effects.enter('detailsContainerClassName');
 		return className;
-	}
-}
+	};
+};
