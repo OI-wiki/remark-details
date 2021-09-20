@@ -225,14 +225,32 @@ module.exports = function blockPlugin (opts) {
       // console.olg
       // return this.encode(node.children)
       // return res
-      let children_ = this.all(node).map((ele) => {
-        // console.log(ele.split('\n').map(e => '    ' + e))
-        return ele.split('\n').map(e => '    ' + e).join('\n')
-      }
-      ).join('\n    \n')
-      // console.log(children_)
+      if(true) {
+        var headerName = "";
+        let nodeHeaderValue = node.header.slice(4,)
 
-      return node.header + children_
+        if(String(nodeHeaderValue).startsWith("note")) {
+          nodeHeaderValue = nodeHeaderValue.slice(5,)
+        }
+        if(String(nodeHeaderValue).startsWith("warning")) {
+          nodeHeaderValue = nodeHeaderValue.slice(8,)
+        }
+        nodeHeaderValue = nodeHeaderValue.replaceAll("\"","").trim()
+
+        if(nodeHeaderValue != '') {
+          nodeHeaderValue = '> **' + nodeHeaderValue + '**\n\n'
+        }
+        let children_ = this.all(node).map((ele) => {
+          // console.log(ele.split('\n').map(e => '    ' + e))
+          return ele.split('\n').map(e => '> ' + e).join('\n')
+        }
+        ).join('\n   \n')
+        if(nodeHeaderValue != '') {
+          return nodeHeaderValue + children_
+        } else {
+          return children_
+        }
+      }
     }
   }
 }
