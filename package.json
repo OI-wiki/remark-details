@@ -65,5 +65,8 @@
 		"micromark-util-types": "^1.0.0",
 		"unified": "^10.1.0",
 		"unist-util-visit": "^4.0.0"
-	}
+	},
+    "ava": {
+        "files": ["test/**/*.test.js"]
+    }
 }
