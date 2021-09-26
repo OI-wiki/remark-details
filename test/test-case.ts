@@ -22,9 +22,7 @@ const testCase = <TestCase>function (config: TestCaseConfig, processor?: (input:
 	const name = `Test Case ${++testCase.count}` + (config.name ? `: ${config.name}` : "");
 	test(name, ava => {
 		let actual = process(input);
-        expected = expected.trim();
-        actual = actual.trim();
-		ava.is(actual, expected, config.message);
+		ava.is(actual.trim(), expected.trim(), config.message);
 	});
 }
 testCase.count = 0;
