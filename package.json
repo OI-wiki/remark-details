@@ -62,13 +62,15 @@
 		"hastscript": "^7.0.2",
 		"mdast-util-from-markdown": "^1.0.2",
 		"micromark-factory-space": "^1.0.0",
+		"micromark-util-character": "^1.1.0",
+		"micromark-util-symbol": "^1.0.0",
 		"micromark-util-types": "^1.0.1",
 		"unified": "^10.1.0",
 		"unist-util-visit": "^4.1.0"
 	},
-    "peerDependencies": {
-        "remark-parse": "^10.0.0"
-    },
+	"peerDependencies": {
+		"remark-parse": "^10.0.0"
+	},
 	"ava": {
 		"files": [
 			"test/**/*.test.js"
