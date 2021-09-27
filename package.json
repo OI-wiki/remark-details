@@ -1,6 +1,6 @@
 {
 	"name": "remark-details",
-	"version": "4.0.2",
+	"version": "4.0.3",
 	"description": "a tokenizer for remark to support details plugin in pymdown",
 	"main": "lib/index.js",
 	"type": "module",
