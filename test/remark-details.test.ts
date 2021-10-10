@@ -129,7 +129,7 @@ testCase({
 	expected: `<details open class="warning"><summary><code>warning</code></summary><p>write something here</p></details>`,
 	message: '',
 });
-for (let i = 8; i <= 13; ++i) {
+for (let i = 8; i <= 15; ++i) {
 	testCase({
 		input: fromPath(`test/input/${i}.md`),
 		expected: fromPath(`test/expected/${i}.md`),
