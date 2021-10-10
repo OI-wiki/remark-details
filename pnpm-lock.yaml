@@ -40,6 +40,7 @@ dependencies:
   micromark-util-character: 1.1.0
   micromark-util-symbol: 1.0.0
   micromark-util-types: 1.0.1
+  remark-parse: 10.0.0
   unified: 10.1.0
   unist-util-visit: 4.1.0
 
@@ -56,7 +57,6 @@ devDependencies:
   rehype-stringify: 9.0.2
   remark: 14.0.1
   remark-cli: 10.0.0
-  remark-parse: 10.0.0
   remark-rehype: 9.1.0
   remark-stringify: 10.0.0
   to-vfile: 7.2.2
@@ -2646,7 +2646,6 @@ packages:
       unified: 10.1.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /remark-rehype/9.1.0:
     resolution: {integrity: sha512-oLa6YmgAYg19zb0ZrBACh40hpBLteYROaPLhBXzLgjqyHQrN+gVP9N/FJvfzuNNuzCutktkroXEZBrxAxKhh7Q==}
