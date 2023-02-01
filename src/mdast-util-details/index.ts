@@ -1,5 +1,9 @@
 import {CompileContext, Extension, Token} from 'mdast-util-from-markdown/lib';
-
+import { Options as toMarkdownExtensions, Context, Handle } from 'mdast-util-to-markdown'
+import { containerPhrasing } from 'mdast-util-to-markdown/lib/util/container-phrasing.js'
+import { containerFlow } from 'mdast-util-to-markdown/lib/util/container-flow.js'
+import { indentLines } from 'mdast-util-to-markdown/lib/util/indent-lines.js'
+import { Node } from 'mdast-util-to-markdown/lib';
 function enter(this: CompileContext, type: string, token: Token, name: string) {
     this.enter(
         {type: type as any, name: name ?? '', attributes: {}, children: []},
@@ -55,6 +59,43 @@ export const fromMarkdownDetails: Extension = {
     },
 };
 
-export const detailsToMarkdown = {
-    // TODO well if you want :sweat_smile:
+function map(line, _, blank) {
+    return '    ' + line
+}
+
+function details_summary_handle(node: any, parent: Node, context: Context) {
+    let value = containerPhrasing(node, context, { before: '\n', after: ' ' })
+    value += '\n'
+    return value
+}
+
+function details_handle(node: any, parent: Node, context: Context) {
+    const exit = context.enter('details' as any)
+    let header = '???';
+    // console.log(node)
+    if (node.attributes?.open === true) {
+        header += '+ '
+    } else {
+        header += ' '
+    }
+    if (node.attributes?.class) {
+        header += node.attributes.class + ' '
+    }
+    let original_children = [...node.children]
+    node.children = original_children.slice(0, 1)
+    header += containerFlow(node, context)
+    node.children = original_children.slice(1, original_children.length)
+    let value = containerFlow(node, context)
+    value = indentLines(value, map)
+    exit()
+    return header + value;
+}
+
+const handlers: Record<Node['type'], Handle> = {
+    'detailsContainer': details_handle,
+    'detailsContainerSummary': details_summary_handle,
+} as any;
+
+export const detailsToMarkdown: toMarkdownExtensions = {
+    handlers: handlers
 };
