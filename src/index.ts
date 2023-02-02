@@ -3,7 +3,7 @@ import { h } from 'hastscript';
 import { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 
-import { fromMarkdownDetails } from './mdast-util-details/index.js';
+import { fromMarkdownDetails, detailsToMarkdown } from './mdast-util-details/index.js';
 import { syntax } from './micromark-details/index.js';
 
 interface DetailsNode extends Node {
@@ -34,6 +34,7 @@ const remarkDetails: Plugin = function (options) {
 
 	add('micromarkExtensions', syntax);
 	add('fromMarkdownExtensions', fromMarkdownDetails);
+	add('toMarkdownExtensions', detailsToMarkdown)
 
 	return transform;
 
@@ -44,7 +45,6 @@ const remarkDetails: Plugin = function (options) {
 	function ondetails(node: DetailsNode) {
 		var data = node.data || (node.data = {});
 		var hast = h(node.name, node.attributes);
-
 		data.hName = hast.tagName;
 		data.hProperties = hast.properties;
 	}

@@ -20,11 +20,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Setup
-        run: npm i -g pnpm @antfu/ni
-
       - name: Install
-        run: nci
+        run: yarn
 
       - name: Test
-        run: nr test --if-present
+        run: yarn test
