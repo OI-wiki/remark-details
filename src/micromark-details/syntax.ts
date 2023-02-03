@@ -9,7 +9,7 @@ import { Extension, State, Token, Tokenizer } from 'micromark-util-types';
 import { factoryDetailsClass } from './factory-details-class.js';
 import { factoryExactSpace } from './factory-exact-space.js';
 import { factorySummary } from './factory-summary.js';
-
+const detailsIndent: string = 'detailsIndent'
 const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 	const ctx = this;
 	let previous: Token;
@@ -104,7 +104,7 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 	const lineStart: State = function (code) {
 		if (code === codes.eof) return after(code);
 		if (!markdownSpace(code)) return after;
-		return factoryExactSpace(effects, chunkStart, nok, types.linePrefix, 4);
+		return factoryExactSpace(effects, chunkStart, nok, detailsIndent, 4);
 	};
 	const chunkStart: State = function (code) {
 		if (code === codes.eof) {
