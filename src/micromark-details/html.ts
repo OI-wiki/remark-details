@@ -32,7 +32,6 @@ export const detailsHtml: Extension = {
 		detailsExpanded() {
 			(this as any).tag(' open');
 		},
-		detailsContainerFence() {},
 		detailsContainerContent() {
 			// this.tag('</p>');
 		},

@@ -24,10 +24,7 @@ const processor = input => {
     // the main plugin written, based on micromark
     .use(remarkDetails)
     // the function above, transform details related tags to html-compilable
-    .use(htmlDetails)
-    .use(remark2rehype)
-    .use(rehypeStringify)
-    .processSync(input).value as string;
+    .parse(input);
 }
 
 const res = processor(
@@ -35,15 +32,8 @@ const res = processor(
 ???+ note 总结
     how to do this
 
-    how to do that
-
-    !!! example
-        what happened if we nested details
-
-        and this
-    and continue
-
+    123
 234`
 )
 
-console.log(res)
+console.dir(res, { depth: null })

@@ -6,6 +6,7 @@ export const factoryDetailsClass: Tokenizer = function (effects, ok, nok) {
 	let detailsClass: 'note' | 'abstract' | 'info' | 'tip' | 'success' | 'failure' | 'bug' | 'danger' | 'example' | 'warning' | 'question';
 	let num = 0;
 	const className: State = function (code) {
+		console.log(`factoryDetailsClass: className: code=${code}, num=${num}`);
 		if (num === detailsClass.length) {
 			if (markdownSpace(code)) {
 				effects.exit('detailsContainerClassName');
@@ -20,6 +21,7 @@ export const factoryDetailsClass: Tokenizer = function (effects, ok, nok) {
 		return className;
 	};
 	return (code) => {
+		console.log(`factoryDetailsClass: code=${code}`);
 		switch (code) {
 			case codes.lowercaseN:
 				detailsClass = 'note';
@@ -58,6 +60,6 @@ export const factoryDetailsClass: Tokenizer = function (effects, ok, nok) {
 				return nok(code);
 		}
 		effects.enter('detailsContainerClassName');
-		return className;
+		return className(code);
 	};
 };

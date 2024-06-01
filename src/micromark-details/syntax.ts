@@ -17,8 +17,8 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 	let openingMark: number; // can be "?" or "!"
 
 	const open: State = (code) => {
+		console.log(`open code: ${code}`);
 		effects.enter('detailsContainer');
-		effects.enter('detailsContainerFence');
 		effects.enter('detailsContainerSequence');
 		if (code === codes.questionMark) {
 			openingMark = codes.questionMark;
@@ -31,6 +31,7 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 		}
 	};
 	const open2: State = function (code) {
+		console.log(`open2 code: ${code}`);
 		if (code === openingMark) {
 			effects.consume(code);
 			sizeOpen++;
@@ -38,10 +39,11 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 		}
 		if (sizeOpen < constants.codeFencedSequenceSizeMin) return nok(code);
 		effects.exit('detailsContainerSequence');
-		return isExpanded;
+		return isExpanded(code);
 	};
 
 	const isExpanded: State = function (code) {
+		console.log(`isExpanded code: ${code}`);
 		if (code === codes.plusSign) {
 			effects.enter('detailsExpanded');
 			effects.consume(code);
@@ -49,7 +51,6 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 		} else if (code !== codes.space) {
 			return nok(code);
 		}
-		effects.exit('detailsContainerFence');
 
 		// first get space, than try if there is class name
 		// if so try again for space, and then get summary
@@ -119,11 +120,14 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 		}
 		const token = effects.enter(types.chunkDocument, {
 			contentType: constants.contentTypeDocument,
-			previous,
+			// previous,
 		});
-		if (previous) previous.next = token;
-		previous = token;
-		return contentContinue;
+		token.next = undefined;
+		// if (previous && previous !== token) {
+		// 	previous.next = token;
+		// 	previous = token;
+		// }
+		return contentContinue(code);
 	};
 	const contentContinue: State = function (code) {
 		console.log(`contentContinue code: ${code}: ${String.fromCharCode(code as number)}`);
@@ -133,9 +137,7 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 			return after(code);
 		}
 		if (markdownLineEnding(code)) {
-			// return effects.check(nonLazyLine, nonLazyLineAfter,
-			// lineAfter)(code);
-			return nonLazyLineAfter;
+			return nonLazyLineAfter(code);
 		}
 		effects.consume(code);
 		return contentContinue;
@@ -143,10 +145,10 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 	// FIXME: change name for this func
 	const nonLazyLineAfter: State = function (code) {
 		console.log(`nonLazyLineAfter code: ${code}`);
-		effects.consume(code); // consume line ending
 		effects.exit(types.chunkDocument);
+		// effects.consume(code); // consume line ending
 		// self.parser.lazy[token.start.line] = false;
-		return lineStart;
+		return lineStart(code);
 	};
 	const lineAfter: State = function (code) {
 		const token = effects.exit(types.chunkDocument);
