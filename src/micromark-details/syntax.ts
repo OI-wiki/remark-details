@@ -1,5 +1,5 @@
 import { factorySpace } from 'micromark-factory-space';
-import { markdownSpace } from 'micromark-util-character';
+import { markdownLineEndingOrSpace, markdownSpace } from 'micromark-util-character';
 import { markdownLineEnding } from 'micromark-util-character';
 import { codes } from 'micromark-util-symbol/codes.js';
 import { constants } from 'micromark-util-symbol/constants.js';
@@ -7,7 +7,7 @@ import { types } from 'micromark-util-symbol/types.js';
 import { Extension, State, Token, Tokenizer } from 'micromark-util-types';
 
 import { factoryDetailsClass } from './factory-details-class.js';
-import { factoryExactSpace } from './factory-exact-space.js';
+import { Exact4SpaceOrEmptyLineClass } from './factory-exact-space.js';
 import { factorySummary } from './factory-summary.js';
 const detailsIndent: string = 'detailsIndent'
 const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
@@ -91,6 +91,7 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 			effects.exit(types.lineEnding);
 			return contentStart;
 		}
+		console.log(`afterSummary code: ${code}`);
 		return nok(code);
 	};
 	const contentStart: State = function (code) {
@@ -102,11 +103,17 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 		return lineStart(code);
 	};
 	const lineStart: State = function (code) {
+		console.log(`lineStart code: ${code}`);
 		if (code === codes.eof) return after(code);
-		if (!markdownSpace(code)) return after;
-		return factoryExactSpace(effects, chunkStart, nok, detailsIndent, 4);
+		if (!markdownLineEndingOrSpace(code)) return after;
+		return effects.attempt(
+			Exact4SpaceOrEmptyLineClass,
+			chunkStart,
+			after
+		)(code)
 	};
 	const chunkStart: State = function (code) {
+		console.log(`chunkStart code: ${code}`);
 		if (code === codes.eof) {
 			return after(code);
 		}
@@ -119,6 +126,7 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 		return contentContinue;
 	};
 	const contentContinue: State = function (code) {
+		console.log(`contentContinue code: ${code}: ${String.fromCharCode(code as number)}`);
 		if (code === codes.eof) {
 			effects.exit(types.chunkDocument);
 			// self.parser.lazy[token.start.line] = false;
@@ -134,6 +142,7 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 	};
 	// FIXME: change name for this func
 	const nonLazyLineAfter: State = function (code) {
+		console.log(`nonLazyLineAfter code: ${code}`);
 		effects.consume(code); // consume line ending
 		effects.exit(types.chunkDocument);
 		// self.parser.lazy[token.start.line] = false;
@@ -147,10 +156,12 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 	const after: State = function (code) {
 		effects.exit('detailsContainerContent');
 		effects.exit('detailsContainer');
+		console.log(`after code: ${code}`);
 		return ok(code);
 	};
 	const afterOpening: State = function (code) {
 		effects.exit('detailsContainer');
+		console.log(`after opening code: ${code}`);
 		return ok(code);
 	};
 	return open;

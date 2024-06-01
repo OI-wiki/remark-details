@@ -69,6 +69,15 @@ how to do that</p></details>`,
 });
 testCase({
 	input: `???+ note 总结
+    how to do this
+
+    how to do that`,
+	expected: `<details open class="note"><summary>总结</summary><p>how to do this
+how to do that</p></details>`,
+	message: 'details with note',
+});
+testCase({
+	input: `???+ note 总结
     to be or not to be
     that is the question
 
