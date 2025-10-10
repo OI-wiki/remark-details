@@ -7,6 +7,7 @@ import { visit } from 'unist-util-visit';
 import { h } from 'hastscript';
 import testCase, { fromPath } from './test-case.js';
 import remarkDetails from '../lib/index.js';
+import { normalize } from 'path';
 
 const htmlDetails: Plugin<[], Root, Root> = function (): Transformer<Root> {
 	return (tree: Root) => {
@@ -22,7 +23,7 @@ testCase.processor = input => {
 	return unified()
 		.use(remarkParse)
 		// the main plugin written, based on micromark
-		.use(remarkDetails)
+		.use(remarkDetails, {normalize: false})
 		// the function above, transform details related tags to html-compilable
 		.use(htmlDetails)
 		.use(remark2rehype)
@@ -36,31 +37,31 @@ testCase({
 	message: 'basic test',
 });
 testCase({
-	input: '???+总结如下\n',
+	input: '???+ "总结如下"\n',
 	expected: '<details open><summary>总结如下</summary></details>',
 	message: 'no content details',
 });
 testCase({
-	input: '???+ note 总结\n',
+	input: '???+ note "总结"\n',
 	expected: '<details open class="note"><summary>总结</summary></details>',
 	message: 'no content details with note',
 });
 testCase({
-	input: `???+ 总结
+	input: `???+ "总结"
     how to do this`,
 	expected:
 		'<details open><summary>总结</summary><p>how to do this</p></details>',
 	message: 'details without note',
 });
 testCase({
-	input: `???+ note 总结
+	input: `???+ note "总结"
     how to do this`,
 	expected:
 		'<details open class="note"><summary>总结</summary><p>how to do this</p></details>',
 	message: 'details with note',
 });
 testCase({
-	input: `???+ note 总结
+	input: `???+ note "总结"
     how to do this
     how to do that`,
 	expected: `<details open class="note"><summary>总结</summary><p>how to do this
@@ -68,7 +69,7 @@ how to do that</p></details>`,
 	message: 'details with note',
 });
 testCase({
-	input: `???+ note 总结
+	input: `???+ note "总结"
     to be or not to be
     that is the question
 
@@ -79,7 +80,7 @@ that is the question</p></details>
 	message: 'details with note',
 });
 testCase({
-	input: `???+ note 总结
+	input: `???+ note "总结"
     to be or not to be
     that is the question
 
@@ -90,7 +91,7 @@ that is the question</p></details>
 	message: 'details with note',
 });
 testCase({
-	input: `???+ warning 总结
+	input: `???+ warning "总结"
     The sunlight claps the earth,
     and the moonbeams kiss the sea:
     what are all these kissings worth,
@@ -111,7 +112,7 @@ what are all these kissings worth,</p><pre><code class="language-cpp">for (int i
 	message: 'details with note and code',
 });
 testCase({
-	input: `???+ note 总结
+	input: `???+ note "总结"
     > I have drunken deep of joy,
     And I will taste no other wine tonight
 
@@ -124,7 +125,7 @@ And I will taste no other wine tonight</p>
 	message: 'details with note and blockquote',
 });
 testCase({
-	input: `???+ warning \`warning\`
+	input: `???+ warning "\`warning\`"
     write something here`,
 	expected: `<details open class="warning"><summary><code>warning</code></summary><p>write something here</p></details>`,
 	message: '',
