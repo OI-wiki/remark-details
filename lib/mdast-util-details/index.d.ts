@@ -1,4 +1,4 @@
-import { Extension } from 'mdast-util-from-markdown/lib';
-import { Options as toMarkdownExtensions } from 'mdast-util-to-markdown';
-export declare const fromMarkdownDetails: Extension;
-export declare const detailsToMarkdown: toMarkdownExtensions;
+import { Extension as fromMarkdownExtension } from 'mdast-util-from-markdown/lib';
+import { Options as toMarkdownExtension } from 'mdast-util-to-markdown';
+export declare const detailsFromMarkdown: fromMarkdownExtension;
+export declare const detailsToMarkdown: toMarkdownExtension;

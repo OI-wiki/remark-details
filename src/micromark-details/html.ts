@@ -4,24 +4,25 @@ export const detailsHtml: Extension = {
 		detailsContainer() {
 			(this as any).tag('<details');
 		},
-		detailsContainerClassName() {
+		detailsContainerClasses() {
 			(this as any).tag(` class="`);
 		},
+		detailsContainerClassName(token) {
+			(this as any).tag(this.sliceSerialize(token));
+		},
+		detailsContainerClassWhitespace() {
+			(this as any).tag(' ');
+		},
 		detailsContainerSummary() {
-			(this as any).tag('>');
 			(this as any).tag('<summary>');
 			this.buffer();
-		},
-		detailsContainerContent() {
-			// this.tag('<p>');
 		},
 	},
 	exit: {
 		detailsContainer() {
 			(this as any).tag('</details>');
 		},
-		detailsContainerClassName(token) {
-			(this as any).tag(this.sliceSerialize(token));
+		detailsContainerClasses() {
 			(this as any).tag(`"`);
 		},
 		detailsContainerSummary() {
@@ -32,9 +33,8 @@ export const detailsHtml: Extension = {
 		detailsExpanded() {
 			(this as any).tag(' open');
 		},
-		detailsContainerFence() {},
-		detailsContainerContent() {
-			// this.tag('</p>');
+		detailsContainerHeader() {
+			(this as any).tag('>');
 		},
 	},
 };
