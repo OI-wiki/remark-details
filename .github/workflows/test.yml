@@ -1,6 +1,8 @@
 name: Test
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
 
 jobs:
   build:
@@ -8,20 +10,21 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [18.x, 20.x, 22.x]
         os: [ubuntu-latest, macos-latest]
       fail-fast: false
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
 
-      - name: Install
-        run: yarn
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
 
-      - name: Test
+      - name: Run tests
         run: yarn test
