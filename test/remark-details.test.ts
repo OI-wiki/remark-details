@@ -130,7 +130,13 @@ testCase({
 	expected: `<details open class="warning"><summary><code>warning</code></summary><p>write something here</p></details>`,
 	message: '',
 });
-for (let i = 8; i <= 15; ++i) {
+testCase({
+	input: `???+ note "Title"   
+    Text.`,
+	expected: `<details open class="note"><summary>Title</summary><p>Text.</p></details>`,
+	message: 'details with trailing spaces in the header line',
+})
+for (let i = 8; i <= 16; ++i) {
 	testCase({
 		input: fromPath(`test/input/${i}.md`),
 		expected: fromPath(`test/expected/${i}.md`),
