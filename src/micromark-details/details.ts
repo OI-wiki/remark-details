@@ -103,10 +103,16 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
   };
 
   // After the end of the container summary.
-  // The container summary construct has consumed all optional spaces after the summary.
   // |???+ note "Title"
   //                   ^
   const afterContainerSummary: State = (code) => {
+    return factorySpace(effects, after, types.whitespace);
+  };
+
+  // At the end of the container header line.
+  // |???+ note "Title"  ␊
+  //                     ^
+  const after: State = (code) => {
     if (markdownLineEnding(code) || code === codes.eof) {
       return ok;
     }
